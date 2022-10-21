@@ -8,8 +8,9 @@ class Guardian
     protected $cuil;
     protected $disponibilidad;
     protected $precio;
+    protected $id_cuenta;
 
-    public function __construct($nombre = '', $direccion = '', $cuil = '', $disponibilidad = '', $precio = '')
+    public function __construct($nombre = '', $direccion = '', $cuil = '', $disponibilidad = '', $precio = '', \modelos\Usuario\Cuenta $id_cuenta = NULL)
     {
 
         $this->setNombre($nombre);
@@ -17,6 +18,7 @@ class Guardian
         $this->setCuil($cuil);
         $this->setDisponibilidad($disponibilidad);
         $this->setPrecio($precio);
+        $this->setId_Cuenta($id_cuenta);
         
     }
  
@@ -80,5 +82,18 @@ class Guardian
 
         return $this;
     }
+
+    public function setId_Cuenta($id_cuenta)
+	{
+		
+		if(is_a($id_cuenta,'\modelos\Usuario\Cuenta'))
+		{
+			$this->id_cuenta = $id_cuenta;
+		}
+		else
+		{
+			$this->id_cuenta = new \modelos\Usuario\Cuenta($id_cuenta);
+		}
+	}
 
 }
