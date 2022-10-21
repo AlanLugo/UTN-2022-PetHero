@@ -6,15 +6,16 @@ class Dueño
     protected $dni;
     protected $direccion;
     protected $telefono;
+    protected $id_cuenta;
 
-    public function __construct($nombre = '', $dni = '', $direccion = '', $telefono = '')
+    public function __construct($nombre = '', $dni = '', $direccion = '', $telefono = '', \modelos\Usuario\Cuenta $id_cuenta = NULL)
     {
 
         $this->setNombre($nombre);
         $this->setDni($dni);
         $this->setDireccion($direccion);
         $this->setTelefono($telefono);
-
+        $this->setId_Cuenta($id_cuenta);
 
     }
 
@@ -66,5 +67,18 @@ class Dueño
 
         return $this;
     }
+
+    public function setId_Cuenta($id_cuenta)
+	{
+		
+		if(is_a($id_cuenta,'\modelos\Usuario\Cuenta'))
+		{
+			$this->id_cuenta = $id_cuenta;
+		}
+		else
+		{
+			$this->id_cuenta = new \modelos\Usuario\Cuenta($id_cuenta);
+		}
+	}
 
 }
