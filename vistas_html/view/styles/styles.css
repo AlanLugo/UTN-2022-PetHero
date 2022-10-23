@@ -3,7 +3,7 @@ margin-bottom: 3.4rem;
 }
 
 .pagUsuario{
-padding-bottom: 16rem;
+padding-bottom: 30rem;
 background-image: url(http://grupotarsus.com/file/banner-mascotas-1.png);
 background-size: cover;
 background-repeat: no-repeat;
@@ -43,4 +43,29 @@ background-repeat: no-repeat;
    background-image: url(https://thumbs.dreamstime.com/b/banner-hide-perro-perrito-con-ojos-azules-aislado-en-fondo-azul-191818011.jpg);
    background-size: cover;
    background-repeat: no-repeat;
+}
+
+.keeperPag{
+    font-style: italic;
+    background-image: url("https://img.freepik.com/fotos-premium/banner-ocultar-cachorro-perro-sorprendido-divertido-aislado-amarillo_77749-307.jpg?w=2000");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 30rem;
+}
+
+.solicitudesPag{
+
+    font-style: italic;
+    background-image: url("https://www.clinicaveterinariaelsllops.com/wp-content/uploads/sites/2/2021/03/perro-setter-irlandes-pasea-campo-2500-web-min.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 30rem;
+}
+
+.historialPag{
+    font-style: italic;
+    background-image: url("https://tumascota.pet/wp-content/uploads/2021/11/razas-de-perros.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 30rem;
 }
