@@ -2,6 +2,7 @@
 namespace daos\Cuenta;
 use daos\SingletoneAbstractDAO as SingletoneAbstractDAO;
 use daos\Conexion as Conexion;
+use PDOException;
 /**
 * 
 */
