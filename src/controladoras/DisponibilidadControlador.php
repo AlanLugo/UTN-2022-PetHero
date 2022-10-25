@@ -227,7 +227,7 @@ public function listar_disponibilidad_guardian($id)
 	try 
 	{
 		$Guardian = new \modelos\Usuario\Guardian($id);
-		$Disponibilidad = $this->DisponibilidadDAO->listar_x_guardian($Guardian);
+		$Disponibilidades = $this->DisponibilidadDAO->listar_x_guardian($Guardian);
 		include('../vistas/Disponibilidad/disponibilidad.php');
 			
 	} catch (\Exception $e) {

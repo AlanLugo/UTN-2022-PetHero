@@ -55,7 +55,7 @@ CREATE TABLE mascotas (
 	PRIMARY KEY (id_mascota),
     FOREIGN KEY fk_mascotas_id_dueño (id_dueño) REFERENCES dueños(id_dueño)
 );
-
+DROP TABLE disponibilidades;
 CREATE TABLE disponibilidades (
 	id_disponibilidad int(11) NOT NULL AUTO_INCREMENT,
     fecha_inicio datetime NOT NULL,

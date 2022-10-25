@@ -28,7 +28,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1, $$Guardian->getId_Guardian());
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad');
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\disponibilidad.php');
             $Mascota = $query->fetch();
             $Mascota->setId_Guardian($Guardian);
             return $Disponibilidad;
@@ -46,7 +46,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getId_Disponibilidad());
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad');
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\disponibilidad.php');
             $obj = $query->fetch();
             return $obj;
 
@@ -64,7 +64,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 			$query = $this->dbh->prepare($sql);
 			$query->bindValue(1,$obj->getFechaInicio());
 			$query->execute();
-			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad');
+			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\disponibilidad.php');
 			$obj = $query->fetch();			
 			return $obj;
 			
@@ -82,7 +82,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 			$query = $this->dbh->prepare($sql);
 			$query->bindValue(1,$obj->getFechaFinal());
 			$query->execute();
-			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad');
+			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\disponibilidad.php');
 			$obj = $query->fetch();			
 			return $obj;
 			
@@ -193,12 +193,12 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
             $sql = "SELECT * from".$this->tabla;
             $query = $this->dbh->prepare($sql);
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad');
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
             $obj = NULL;
             while ($row = $query->fetch()) {
-
                 $obj[] = $row;
             }
+
         }catch(PDOException $e){
 
             print "Error!: " . $e->getMessage();
@@ -214,11 +214,11 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 			$query->bindValue(1,$obj->getId_Guardian());
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
-			$Mascotas = NULL;
+			$Disponibilidad = NULL;
 			while ($row = $query->fetch()) {				
-				$Mascotas[] = $row;
+				$Disponibilidad[] = $row;
 			}
-			return $Mascotas;
+			return $Disponibilidad;
 			
 		}catch(PDOException $e){
 			

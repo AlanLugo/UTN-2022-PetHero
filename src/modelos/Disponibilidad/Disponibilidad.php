@@ -5,16 +5,16 @@ namespace modelos\Disponibilidad;
 class Disponibilidad{
 
     protected $id_disponibilidad;
-    protected $fechaInicio;
-    protected $fechaFinal;
+    protected $fecha_inicio;
+    protected $fecha_final;
     protected $disponible;
     protected $id_guardian;
 
-    public function __construct($id_disponibilidad = '', $fechaInicio = '', $fechaFinal = '', $disponible = '', $id_guardian = '')
+    public function __construct($id_disponibilidad = '', $fecha_inicio = '', $fecha_final = '', $disponible = '', \modelos\Usuario\Guardian $id_guardian = NULL)
     {
         $this->setId_Disponibilidad($id_disponibilidad);
-        $this->setFechaInicio($fechaInicio);
-        $this->setFechaFinal($fechaFinal);
+        $this->setFechaInicio($fecha_inicio);
+        $this->setFechaFinal($fecha_final);
         $this->setDisponible($disponible);
         $this->setId_Guardian($id_guardian);
     }
@@ -27,12 +27,12 @@ class Disponibilidad{
 
     public function getFechaInicio()
     {
-        return $this->fechaInicio;
+        return $this->fecha_inicio;
     }
 
     public function getFechaFinal()
     {
-        return $this->fechaFinal;
+        return $this->fecha_final;
     }
  
     public function getDisponible()
@@ -53,17 +53,17 @@ class Disponibilidad{
         return $this;
     }
 
-    public function setFechaInicio($fechaInicio)
+    public function setFechaInicio($fecha_inicio)
     {
-        $this->fechaInicio = $fechaInicio;
+        $this->fecha_inicio = $fecha_inicio;
 
         return $this;
     }
  
     
-    public function setFechaFinal($fechaFinal)
+    public function setFechaFinal($fecha_final)
     {
-        $this->fechaFinal = $fechaFinal;
+        $this->fecha_final = $fecha_final;
 
         return $this;
     }
@@ -79,7 +79,7 @@ class Disponibilidad{
     public function setId_Guardian($id_guardian)
     {      
 
-        if(is_a($id_guardian,'\modelos\Usuario\Dueño'))
+        if(is_a($id_guardian,'\modelos\Usuario\Guardian'))
 		{
 			$this->id_guardian = $id_guardian;
 		}
