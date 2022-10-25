@@ -2,6 +2,7 @@
 namespace daos\Guardian;
 use daos\SingletoneAbstractDAO as SingletoneAbstractDAO;
 use daos\Conexion as Conexion;
+use PDOException;
 /**
 * 
 */
@@ -54,13 +55,12 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 		}
 	}
 
-	public function leer_x_apellido_nombre($obj){
+	public function leer_x_nombre($obj){
 
 		try {			
-			$sql = "SELECT * from ".$this->tabla." WHERE apellido = ? AND nombre = ?";
+			$sql = "SELECT * from ".$this->tabla." WHERE nombre = ? ";
 			$query = $this->dbh->prepare($sql);
-			$query->bindValue(1,$obj->getApellido());
-			$query->bindValue(2,$obj->getNombre());
+			$query->bindValue(1,$obj->getNombre());
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Usuario\Guardian');
 			$obj = $query->fetch();			
@@ -72,6 +72,7 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 			
 		}
 	}
+
 	public function actualizar($id){}
 	public function borrar($id){}
 	public function crear($id){}

@@ -35,12 +35,13 @@ class LoginControlador
 			}	
 			else
 			{	
+				$_SESSION['Cuenta'] = serialize($Cuenta);
 				if(strcmp($Cuenta->getRol(), "Guardian")==0)
 				{
 					$Guardian = $this->GuardianDAO->getGuardian_byID_Cuenta($Cuenta);
-					$_SESSION['Guardian'] = serialize($Guardian);
+					$_SESSION['Guardian'] = serialize($Guardian);					
 				}
-				else if(strcmp($Dueño->getRol(), "Dueño")==0)
+				else if(strcmp($Cuenta->getRol(), "Dueño")==0)
 				{
 					$Dueño = $this->DueñoDAO->getDueño_byID_Cuenta($Cuenta);
 					$_SESSION['Dueño'] = serialize($Dueño);

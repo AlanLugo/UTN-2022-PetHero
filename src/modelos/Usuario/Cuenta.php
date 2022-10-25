@@ -37,10 +37,12 @@ class Cuenta
 		return $this->rol;
 	}
 	
-
-	public function setId_Cuenta($id_cuenta)
+	
+	public function setId_cuenta($id_cuenta)
 	{
 		$this->id_cuenta = $id_cuenta;
+
+		return $this;
 	}
 
 	public function setUsuario($usuario)
@@ -57,5 +59,6 @@ class Cuenta
 	{
 		$this->rol = $rol;
 	}
+	 
 	
 } 

@@ -1,5 +1,6 @@
 <?php 
 namespace daos;
+Use PDOException;
 /**
 * 
 */

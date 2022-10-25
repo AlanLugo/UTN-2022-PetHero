@@ -25,7 +25,7 @@ class ProcesarindexControlador
 			Procesar('contenido','procesarindex/inicio',[]);
 			</script><?php				
 		}
-		elseif(isset($_SESSION['Cliente']))
+		elseif(isset($_SESSION['Dueño']))
 		{			
 			?><script type="text/javascript">
 			Procesar('contenido','procesarindex/inicio',[]);
