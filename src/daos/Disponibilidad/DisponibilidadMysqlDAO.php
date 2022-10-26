@@ -46,7 +46,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getId_Disponibilidad());
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\disponibilidad.php');
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
             $obj = $query->fetch();
             return $obj;
 
@@ -115,11 +115,12 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
                 $this->setId_Guardian($id_guardian);
          
             */
-            $sql = "UPDATE " . $this->tabla . " SET fecha_inicio = ?, fecha_final = ?, disponible = ? WHERE id_guardian = ?";
+            $sql = "UPDATE " . $this->tabla . " SET fecha_inicio = ?, fecha_final = ?, disponible = ? WHERE id_disponibilidad = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getFechaInicio());
             $query->bindValue(2,$obj->getFechaFinal());
             $query->bindValue(3,$obj->getDisponible());
+            $query->bindValue(4,$obj->getId_Disponibilidad());
             if($query->execute())
             {
                 return $obj;
@@ -160,16 +161,17 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 	public function crear($obj)
     {
         try{
-            if($this->leer($obj) != NULL)
+            /*if($this->leer($obj) != NULL)
             {
                 throw new \Exception("Ya existe una disponibilidad con la misma descripcion.");
                 exit();
-            }
-            $sql = "INSERT INTO " . $this->tabla . " (fecha_inicio,fecha_final,disponible) VALUES (?,?,?)";
+            }*/
+            $sql = "INSERT INTO " . $this->tabla . " (fecha_inicio,fecha_final,disponible,id_guardian) VALUES (?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getFechaInicio());
             $query->bindValue(2,$obj->getFechaFinal());
             $query->bindValue(3,$obj->getDisponible());
+            $query->bindValue(4,$obj->getId_Guardian()->getId_Guardian());
             if($query->execute())
             {
                 $obj->setId_Disponibilidad($this->dbh->lastInsertId());

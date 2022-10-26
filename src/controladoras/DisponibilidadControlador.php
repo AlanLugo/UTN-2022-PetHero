@@ -100,25 +100,25 @@ class DisponibilidadControlador
 	===============================================================================
 	
 */	
-	public function alta_disponibilidad($fechaInicio, $fechaFinal, $disponible)
+	public function alta_disponibilidad($fechaInicio, $fechaFinal)
 	{		
 		
 		try
 		{
-				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();			
-				$Nueva_Disponibilidad = new \modelos\Disponibilidad\Disponibilidad('',$fechaInicio,$fechaFinal,$disponible);
+				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();					
+				$Guardian = unserialize($_SESSION['Guardian']);		
+				$Nueva_Disponibilidad = new \modelos\Disponibilidad\Disponibilidad('',$fechaInicio,$fechaFinal,true,$Guardian);
 				if(empty($Nueva_Disponibilidad->getFechaInicio()) Or empty($Nueva_Disponibilidad->getFechaFinal()))
 				{
 					throw new \Exception("Campo/s vacio/s.");
 					exit();		
 				}
 				$Nueva_Disponibilidad = $this->DisponibilidadDAO->crear($Nueva_Disponibilidad);
-				
                 if($Nueva_Disponibilidad!=NULL)
 				{
 					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Disponibilidad creada correctamente..');
 						$Mensaje_Alerta->imprimir();
-					$JS_EN_PHP->ejecutar('Procesar("tabla_disponibilidad","disponibilidad/listar_disponibilidades",[]);');
+					$JS_EN_PHP->ejecutar('Procesar("tabla_disponibilidad","disponibilidad/listar_disponibilidad_guardian",['.$Guardian->getId_Guardian().']);');
 				}
                 
 		} catch (\Exception $e) {
@@ -143,14 +143,15 @@ public function modificar_disponibilidad($id_disponibilidad,$fechaInicio,$fechaF
     try
     {
         $JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
-        $Disponibilidad = new \modelos\Disponibilidad\Disponibilidad($id_disponibilidad,$fechaInicio,$fechaFinal,$disponible);			
-        $Anterior_Disponibilidad = $this->MascotaDAO->leer($Disponibilidad);
-        $Mascota = $this->MascotaDAO->actualizar($Disponibilidad);			
+		$Guardian = unserialize($_SESSION['Guardian']);
+        $Disponibilidad = new \modelos\Disponibilidad\Disponibilidad($id_disponibilidad,$fechaInicio,$fechaFinal,$disponible,$Guardian);			
+		$Disponibilidad = $this->DisponibilidadDAO->actualizar($Disponibilidad);	
 		if($Disponibilidad!=NULL)
 		{
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Disponibilidad creada correctamente..');
 			$Mensaje_Alerta->imprimir();
-			$JS_EN_PHP->ejecutar('Procesar("tabla_disponibilidad","disponibilidad/listar_disponibilidades",[]);');
+			$JS_EN_PHP->ejecutar('Procesar("tabla_disponibilidad","disponibilidad/listar_disponibilidad_guardian",['.$Guardian->getId_Guardian().']);');
+				
 		}
 		else
 		{
@@ -176,13 +177,15 @@ public function eliminar_disponibilidad($id)
 	try
 	{
 		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
+		$Guardian = unserialize($_SESSION['Guardian']);
 		$Disponibilidad = new \modelos\Disponibilidad\Disponibilidad($id);
 		$Disponibilidad = $this->DisponibilidadDAO->borrar($Disponibilidad);				
 		if($Disponibilidad!=NULL)
 		{
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Disponibilidad creada correctamente..');
 			$Mensaje_Alerta->imprimir();
-			$JS_EN_PHP->ejecutar('Procesar("tabla_disponibilidad","disponibilidad/listar_disponibilidades",[]);');
+			$JS_EN_PHP->ejecutar('Procesar("tabla_disponibilidad","disponibilidad/listar_disponibilidad_guardian",['.$Guardian->getId_Guardian().']);');
+			
 		}
 		else
 		{
