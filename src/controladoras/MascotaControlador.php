@@ -112,7 +112,7 @@ class MascotaControlador
 		{
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 				$Mascota = unserialize($_SESSION['Mascota']);			
-				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'');
+				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'',$Mascota);
 				if(empty($Nueva_Mascota->getRaza()) Or empty($Nueva_Mascota->getTamaño()))
 				{
 					throw new \Exception("Campo/s vacio/s.");
@@ -186,6 +186,7 @@ public function eliminar_mascota($id)
 	try
 	{
 		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
+		$Mascota = unserialize($_SESSION['Mascota']);
 		$Mascota = new \modelos\Mascota\Mascota($id);
 		$Mascota = $this->MascotaDAO->borrar($Mascota);
 		if($Mascota!=NULL)
@@ -193,7 +194,7 @@ public function eliminar_mascota($id)
 			$this->eliminar_imagen($Mascota);
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Mascota eliminada correctamente.');
 			  $Mensaje_Alerta->imprimir();  				
-			$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascotas",[]);');
+			$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascotas",['.$Mascota->getId_Mascota().']);');
 
 		}
 		else
@@ -272,7 +273,7 @@ public function subir_imagen($utilidad,$obj,$archivo)
 			if(move_uploaded_file($_FILES[$id_input]['tmp_name'], $ruta_directorio."/{$nombre_archivo_a_guardar}"))
 			{
 				$obj->setImagen('../'.$ruta_directorio.$nombre_archivo_a_guardar);
-				if($this->TipoCervezaDAO->actualizar($obj)!=NULL)
+				if($this->MascotaDAO->actualizar($obj)!=NULL)
 				{
 					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Imagen subida correctamente.');
 					  $Mensaje_Alerta->imprimir();

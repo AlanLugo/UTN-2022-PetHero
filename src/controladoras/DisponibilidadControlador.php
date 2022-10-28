@@ -155,8 +155,7 @@ public function modificar_disponibilidad($id_disponibilidad,$fechaInicio,$fechaF
 		}
 		else
 		{
-			throw new \Exception("Error al modificar el articulo");
-				
+			throw new \Exception("Error al modificar el articulo");		
 		}
     } catch (\Exception $e) {
             $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());

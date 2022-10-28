@@ -49,7 +49,7 @@ CREATE TABLE mascotas (
     nombre varchar(50) NOT NULL,
     raza varchar(50) NOT NULL,
     tamaño varchar(100) NOT NULL,
-    Observaciones varchar(50) NOT NULL,
+    observaciones varchar(50) NOT NULL,
     imagen varchar(512) NOT NULL,
     id_dueño int,
 	PRIMARY KEY (id_mascota),
