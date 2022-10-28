@@ -11,13 +11,13 @@
         <div class="form-group">
                 <label class="control-label"
                 for="inputEmail3">Nombre</label>
-                <input class="form-control" id="alta_mascota_nombre" placeholder="Ingrese un nombre" type="text" value="<?php echo $Mascota->getNombre();?>" >
+                <input class="form-control" id="modificar_mascota_nombre" placeholder="Ingrese un nombre" type="text" value="<?php echo $Mascota->getNombre();?>" >
             </div>
             $nombre, $raza, $tamaño, $observaciones, $archivo=''
             <div class="form-group">
                 <label class="control-label"
                 for="inputEmail3">Raza</label>
-                <input class="form-control" id="alta_mascota_raza" placeholder="Ingrese una raza" type="text" value="<?php $Mascota->getRaza();?>">
+                <input class="form-control" id="modificar_mascota_raza" placeholder="Ingrese una raza" type="text" value="<?php $Mascota->getRaza();?>">
             </div>
 
             <div class="form-group">
@@ -47,9 +47,10 @@
         </div>
       </form>
     </div>
-    <div class="modal-footer" id="footer_disponibilidad_modificar">
-
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_modificar_disponibilidad','disponibilidad/modificar_disponibilidad',['<?php echo $Disponibilidad->getId_Disponibilidad();?>',$('#modificar_disponibilidad_fecha_inicio').val(),$('#modificar_disponibilidad_fecha_final').val(),$('#modificar_disponibilidad_disponibilidad').val()]);">Modificar</button>
+    <div class="modal-footer" id="footer_mascota_modificar">
+    <!--TERMINAR EL PROCESAR DE MODIFICACION MASCOTA -->
+    <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_mascota','mascota/alta_mascota',[$('#alta_mascota_nombre').val(),$('#alta_mascota_raza').val(),$('#alta_mascota_tamaño').val(),$('#alta_mascota_observacion').val()],$('#imagen-mascota').prop('files')[0]);">Modificar</button>
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_modificar_mascota','mascota/modificar_mascota',['<?php echo $Mascota->getId_Mascota();?>',$('#modificar_disponibilidad_fecha_inicio').val(),$('#modificar_disponibilidad_fecha_final').val(),$('#modificar_disponibilidad_disponibilidad').val()]);">Modificar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
   </div>
