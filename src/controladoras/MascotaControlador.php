@@ -110,7 +110,8 @@ class MascotaControlador
 		
 		try
 		{
-				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();			
+				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
+				$Mascota = unserialize($_SESSION['Mascota']);			
 				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'');
 				if(empty($Nueva_Mascota->getRaza()) Or empty($Nueva_Mascota->getTamaño()))
 				{
@@ -122,8 +123,8 @@ class MascotaControlador
 				{
 					$this->subir_imagen('crear',$Nueva_Mascota,$archivo);
 					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Mascota creada correctamente..');
-						$Mensaje_Alerta->imprimir();
-					$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascotas",[]);');
+					$Mensaje_Alerta->imprimir();
+					$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_dueño",['.$Mascota->getId_Mascota().']);');
 				}
 			
 		} catch (\Exception $e) {
