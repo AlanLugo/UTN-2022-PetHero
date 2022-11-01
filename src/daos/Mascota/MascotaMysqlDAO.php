@@ -130,17 +130,20 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 	public function crear($obj)
     {
         try{
+            /*
             if($this->buscar_x_nombre($obj) != NULL)
             {
                 throw new \Exception("Ya existe un tipo de mascota con la misma descripcion.");
                 exit();
             }
-            $sql = "INSERT INTO " . $this->tabla . " (nombre,raza,tamaño,observaciones) VALUES (?,?,?,?)";
+            */
+            $sql = "INSERT INTO " . $this->tabla . " (nombre,raza,tamaño,observaciones,imagen) VALUES (?,?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
             $query->bindValue(2,$obj->getRaza());
             $query->bindValue(3,$obj->getTamaño());
             $query->bindValue(4,$obj->getObservaciones());
+            $query->bindValue(5,$obj->getImagen());
             if($query->execute())
             {
                 $obj->setId_Mascota($this->dbh->lastInsertId());

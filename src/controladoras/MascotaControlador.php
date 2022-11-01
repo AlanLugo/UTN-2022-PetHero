@@ -111,8 +111,8 @@ class MascotaControlador
 		try
 		{
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
-				$Mascota = unserialize($_SESSION['Mascota']);			
-				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'',$Mascota);
+				$Dueño = unserialize($_SESSION['Dueño']);			
+				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'',$Dueño);
 				if(empty($Nueva_Mascota->getRaza()) Or empty($Nueva_Mascota->getTamaño()))
 				{
 					throw new \Exception("Campo/s vacio/s.");
@@ -124,7 +124,7 @@ class MascotaControlador
 					$this->subir_imagen('crear',$Nueva_Mascota,$archivo);
 					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Mascota creada correctamente..');
 					$Mensaje_Alerta->imprimir();
-					$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_dueño",['.$Mascota->getId_Mascota().']);');
+					$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_dueño",['.$Dueño->getId_Mascota().']);');
 				}
 			
 		} catch (\Exception $e) {
