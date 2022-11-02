@@ -46,7 +46,7 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getId_Mascota());
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota');
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
             $obj = $query->fetch();
             return $obj;
 
@@ -84,12 +84,14 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
                 throw new \Exception("Error ya existe un registro con el mismo nombre.");
                 exit();
             }
-            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, raza = ?, tamaño = ?, obsevaciones = ? WHERE id_mascota = ?";
+            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, raza = ?, tamaño = ?, obsevaciones = ?, imagen = ? WHERE id_mascota = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
             $query->bindValue(2,$obj->getRaza());
             $query->bindValue(3,$obj->getTamaño());
             $query->bindValue(4,$obj->getObservaciones());
+            $query->bindValue(5,$obj->getImagen());
+            $query->bindValue(6,$obj->getId_Mascota());
             if($query->execute())
             {
                 return $obj;
@@ -130,20 +132,21 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 	public function crear($obj)
     {
         try{
-            /*
+            
             if($this->buscar_x_nombre($obj) != NULL)
             {
                 throw new \Exception("Ya existe un tipo de mascota con la misma descripcion.");
                 exit();
             }
-            */
-            $sql = "INSERT INTO " . $this->tabla . " (nombre,raza,tamaño,observaciones,imagen) VALUES (?,?,?,?,?)";
+            
+            $sql = "INSERT INTO " . $this->tabla . " (nombre,raza,tamaño,observaciones,imagen,id_dueño) VALUES (?,?,?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
             $query->bindValue(2,$obj->getRaza());
             $query->bindValue(3,$obj->getTamaño());
             $query->bindValue(4,$obj->getObservaciones());
             $query->bindValue(5,$obj->getImagen());
+            $query->bindValue(6,$obj->getId_Dueño()->getId_Dueño());
             if($query->execute())
             {
                 $obj->setId_Mascota($this->dbh->lastInsertId());
@@ -164,14 +167,13 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 	public function listar(){
         try{
 
-            $sql = "SELECT * from".$this->tabla;
+            $sql = "SELECT * from".$this->tabla. "Order by nombre";
             $query = $this->dbh->prepare($sql);
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota');
-            $obj = NULL;
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
+            $Mascotas = NULL;
             while ($row = $query->fetch()) {
-
-                $obj[] = $row;
+                $Mascotas[] = $row;
             }
         }catch(PDOException $e){
 
@@ -188,7 +190,7 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
             $query->execute();
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota');
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
             $obj = $query->fetch();
             return $obj;
 

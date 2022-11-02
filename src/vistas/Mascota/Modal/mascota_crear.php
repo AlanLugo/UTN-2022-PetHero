@@ -47,7 +47,7 @@
     </div>
     <div class="modal-footer" id="footer_mascota_crear">
 
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_mascota','mascota/alta_mascota',[$('#alta_mascota_nombre').val(),$('#alta_mascota_raza').val(),$('#alta_mascota_tamaño').val(),$('#alta_mascota_observacion').val()],$('#imagen-mascota').prop('files')[0]);">Crear</button>
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_mascota','mascota/alta_mascota',[$('#alta_mascota_nombre').val(),$('#alta_mascota_raza').val(),$('#alta_mascota_tamaño').val(),$('#alta_mascota_observacion').val(),$('#imagen-mascota').prop('files')[0]]);">Crear</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
   </div>

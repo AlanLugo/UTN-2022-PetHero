@@ -45,7 +45,7 @@
 	<div class="margin-bootom-sm" id="body-panel-dueño">
     <?php print_r($Dueño); ?>
 		<script type="text/javascript">
-			Procesar('body-panel-dueño','mascota/lista_mascotas_duenio',[<?php echo $Dueño->getId_Dueño();?>]);
+			Procesar('body-panel-dueño','mascota/listar_mascota_duenio',[<?php echo $Dueño->getId_Dueño();?>]);
 		</script>
 	</div>
 		

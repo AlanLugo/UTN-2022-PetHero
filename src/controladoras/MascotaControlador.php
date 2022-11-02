@@ -109,7 +109,12 @@ class MascotaControlador
 	{		
 		
 		try
-		{
+		{		
+				echo "nombre".$nombre;
+				echo "raza".$raza;
+				echo "tamaño".$tamaño;
+				echo "observaciones".$observaciones;
+				echo "archivo".$archivo;
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 				$Dueño = unserialize($_SESSION['Dueño']);			
 				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'',$Dueño);
@@ -124,7 +129,7 @@ class MascotaControlador
 					$this->subir_imagen('crear',$Nueva_Mascota,$archivo);
 					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Mascota creada correctamente..');
 					$Mensaje_Alerta->imprimir();
-					$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_dueño",['.$Dueño->getId_Mascota().']);');
+					$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_duenio",['.$Dueño->getId_Dueño().']);');
 				}
 			
 		} catch (\Exception $e) {
@@ -229,16 +234,17 @@ public function subir_imagen($utilidad,$obj,$archivo)
 		}
 		switch ($utilidad) {
 				case 'crear':
-				$id_input = 4;
+				$id_input = 5;
 				break;
 
 				case 'modificar':
-				$id_input = 5;
+				$id_input = 6;
 				break;
 			
 		}
 		
 		$ruta_directorio = 'uploads/imagenes/mascota/';
+		print($_FILES);
 		$nombre_archivo = basename($_FILES[$id_input]['name']);
 		$extension_archivo = pathinfo($nombre_archivo,PATHINFO_EXTENSION);			
 		//$nombre_archivo_a_guardar = $obj->getDescripcion().'-'.$fecha_actual.'.'.$extension_archivo;
@@ -272,6 +278,7 @@ public function subir_imagen($utilidad,$obj,$archivo)
 			}
 			if(move_uploaded_file($_FILES[$id_input]['tmp_name'], $ruta_directorio."/{$nombre_archivo_a_guardar}"))
 			{
+				echo "HOLA ACA CUALQUIER COSA";
 				$obj->setImagen('../'.$ruta_directorio.$nombre_archivo_a_guardar);
 				if($this->MascotaDAO->actualizar($obj)!=NULL)
 				{
@@ -353,7 +360,7 @@ public function lista_mascotas()
 		Funcion que se encarga retornar un arreglo con objetos de mascota		
 	===============================================================================
 */	
-public function lista_mascotas_duenio($id)
+public function listar_mascota_duenio($id)
 {	
 	try 
 	{
