@@ -84,7 +84,8 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
                 throw new \Exception("Error ya existe un registro con el mismo nombre.");
                 exit();
             }
-            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, raza = ?, tamaño = ?, obsevaciones = ?, imagen = ? WHERE id_mascota = ?";
+            
+            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, raza = ?, tamaño = ?, observaciones = ?, imagen = ? WHERE id_mascota = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
             $query->bindValue(2,$obj->getRaza());

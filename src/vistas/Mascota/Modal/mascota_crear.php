@@ -13,7 +13,7 @@
                 for="inputEmail3">Nombre</label>
                 <input class="form-control" id="alta_mascota_nombre" placeholder="Ingrese un nombre" type="text" >
             </div>
-            $nombre, $raza, $tamaño, $observaciones, $archivo=''
+  
             <div class="form-group">
                 <label class="control-label"
                 for="inputEmail3">Raza</label>
@@ -40,8 +40,8 @@
                     <input id="imagen-mascota" type="file" style="display:none;" onchange="$('#info-imagen-mascota').html($(this).val());">
                         Buscar Imagen
                 </label>
-            <span class='label label-info' id="info-imagen-mascota"></span>          
-        </div>
+            <span class='label label-info' id="info-imagen-mascota"></span> </div>
+
     </div>
       </form>
     </div>
