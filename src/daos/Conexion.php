@@ -12,7 +12,7 @@ class Conexion extends SingletoneAbstractDAO
     {
         try {//200.58.103.100
            
-           $this->dbh = new \PDO( 'mysql:host=localhost;dbname=pethero', 'root', '12345' );
+           $this->dbh = new \PDO( 'mysql:host=localhost;dbname=pethero','root', '' );
             $this->dbh->exec("SET CHARACTER SET utf8");
             
         } catch (PDOException $e) {

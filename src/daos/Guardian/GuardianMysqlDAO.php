@@ -75,7 +75,11 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 
 	public function actualizar($id){}
 	public function borrar($id){}
-	public function crear($id){}
+
+	public function crear($id){
+		//crear
+	}
+
 	public function listar()
 	{
 		try {

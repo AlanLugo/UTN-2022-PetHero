@@ -15,7 +15,7 @@
  require_once('../config/Autoload.php');
  config\Autoload::iniciar();
  config\Router::direccionar(new config\Request()); 
-?>
+
  
  
 
