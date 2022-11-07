@@ -1,0 +1,71 @@
+.nav_items{
+margin-bottom: 3.4rem;
+}
+
+.pagUsuario{
+padding-bottom: 30rem;
+background-image: url(http://grupotarsus.com/file/banner-mascotas-1.png);
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+.pagServicios{
+    padding-bottom: 40rem;
+    background-image: url(https://img.freepik.com/foto-gratis/escuchandote-perro-joven-bulldog-frances-planteando-lindo-perrito-o-mascota-blanco-negro-jugueton-jugando-parece-feliz-aislado-sobre-fondo-blanco-concepto-movimiento-accion-movimiento_155003-34898.jpg?w=2000);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pagReserva{
+    padding-bottom: 40rem;
+    background-image: url(https://img.freepik.com/psd-gratis/adorable-retrato-cachorro-bulldog-blanco_53876-74039.jpg?w=2000);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pagFecha{
+    padding-bottom: 40rem;
+    background-image: url(https://img.freepik.com/fotos-premium/maton-estadounidense-estudio_87557-12354.jpg?w=2000);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pagFormMascota{
+    padding-bottom: 13em;
+    background-image: url(https://thumbs.dreamstime.com/b/el-grupo-del-perro-est%C3%A1-mirando-para-arriba-67747999.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pagLogin{
+    padding-top: 9rem;
+    padding-bottom: 10rem;
+   background-image: url(https://thumbs.dreamstime.com/b/banner-hide-perro-perrito-con-ojos-azules-aislado-en-fondo-azul-191818011.jpg);
+   background-size: cover;
+   background-repeat: no-repeat;
+}
+
+.keeperPag{
+    font-style: italic;
+    background-image: url("https://img.freepik.com/fotos-premium/banner-ocultar-cachorro-perro-sorprendido-divertido-aislado-amarillo_77749-307.jpg?w=2000");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 30rem;
+}
+
+.solicitudesPag{
+
+    font-style: italic;
+    background-image: url("https://www.clinicaveterinariaelsllops.com/wp-content/uploads/sites/2/2021/03/perro-setter-irlandes-pasea-campo-2500-web-min.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 30rem;
+}
+
+.historialPag{
+    font-style: italic;
+    background-image: url("https://tumascota.pet/wp-content/uploads/2021/11/razas-de-perros.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 30rem;
+}
