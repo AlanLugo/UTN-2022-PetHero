@@ -24,8 +24,14 @@
             <div class="form-group">
                 <label class="control-label">Rol</label>
                     <select class="form-control" id="alta_cuenta_rol" placeholder="Seleccione un rol">
+                      
+                      <div id="registro_dueño">
                         <option>Dueño</option>
+                      </div>
+                      
+                      <div id="registro_guardian">
                         <option>Guardian</option>
+                    </div>
                     </select>
             </div>
 
@@ -41,3 +47,14 @@
     </div>
   </div>
 </div>
+
+
+
+
+<script type="text/javascript">
+    var rol = document.getElementById('alta_cuenta_rol').value;
+
+    if(rol == "Dueño"){
+
+    }
+</script>
