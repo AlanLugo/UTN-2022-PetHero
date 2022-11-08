@@ -1,6 +1,8 @@
 <?php
 namespace modelos\Reserva;
 
+use modelos\Mascota\Mascota;
+
 class Reserva{
 
     protected $id_reserva;
@@ -8,10 +10,11 @@ class Reserva{
     protected $fecha_final;
     protected $horarios;
     protected $estado;
+    protected $id_mascota;
     protected $id_dueño;
     protected $id_guardian;
 
-    public function __construct($id_reserva = '', $fecha_inicio = '', $fecha_final = '', $horarios = '', $estado = '')
+    public function __construct($id_reserva = '', $fecha_inicio = '', $fecha_final = '', $horarios = '', $estado = '',\modelos\Mascota\Mascota $id_mascota = NULL,\modelos\Usuario\Dueño $id_dueño = NULL, \modelos\Usuario\Guardian $id_guardian = NULL)
     {
         
     }       

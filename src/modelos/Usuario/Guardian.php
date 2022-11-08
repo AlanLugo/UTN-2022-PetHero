@@ -8,9 +8,11 @@ class Guardian
     protected $cuil;
     protected $disponibilidad;
     protected $precio;
+    protected $tamaño_maximo;
+    protected $raza_dia;
     protected $id_cuenta;
 
-    public function __construct($id_guardian = '', $nombre = '', $direccion = '', $cuil = '', $disponibilidad = '', $precio = '', \modelos\Usuario\Cuenta $id_cuenta = NULL)
+    public function __construct($id_guardian = '', $nombre = '', $direccion = '', $cuil = '', $disponibilidad = '', $precio = '',$tamaño_maximo = '',$raza_dia = '', \modelos\Usuario\Cuenta $id_cuenta = NULL)
     {
         $this->setId_Guardian($id_guardian);
         $this->setNombre($nombre);
@@ -18,8 +20,9 @@ class Guardian
         $this->setCuil($cuil);
         $this->setDisponibilidad($disponibilidad);
         $this->setPrecio($precio);
+        $this->set_tamaño_maximo($tamaño_maximo);
+        $this->set_raza_dia($raza_dia);
         $this->setId_Cuenta($id_cuenta);
-        
     }
      
     public function getId_Guardian()
@@ -51,6 +54,16 @@ class Guardian
     public function getPrecio()
     {
         return $this->precio;
+    }
+
+    public function get_tamaño_maximo()
+    {
+        return $this->tamaño_maximo;
+    }
+
+    public function get_raza_dia()
+    {
+        return $this->raza_dia;
     }
 
     public function getId_Cuenta()
@@ -89,6 +102,20 @@ class Guardian
     public function setPrecio($precio)
     {
         $this->precio = $precio;
+
+        return $this;
+    }
+
+    public function set_tamaño_maximo($tamaño_maximo)
+    {
+        $this->tamaño_maximo = $tamaño_maximo;
+
+        return $this;
+    }
+
+    public function set_raza_dia($raza_dia)
+    {
+        $this->raza_dia = $raza_dia;
 
         return $this;
     }
