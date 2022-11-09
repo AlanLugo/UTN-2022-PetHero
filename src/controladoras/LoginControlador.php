@@ -63,6 +63,39 @@ class LoginControlador
 
 	}
 
+	public function registro($usuario, $password, $rol)
+	{		
+		
+		try
+		{
+				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();			
+				$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
+				if(empty($Nueva_Cuenta->getUsuario()) Or empty($Nueva_Cuenta->getPassword()) Or empty($Nueva_Cuenta->getRol()))
+				{
+					throw new \Exception("Campo/s vacio/s.");
+					exit();		
+				}
+				$Nueva_Cuenta = $this->CuentaDAO->crear($Nueva_Cuenta);
+				if($Nueva_Cuenta!=NULL)
+				{
+					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Cuenta creada correctamente..');
+						$Mensaje_Alerta->imprimir();
+                        
+					$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","cuenta/listar_cuenta",[]);');
+				}
+			
+		} catch (\Exception $e) {
+				$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());
+  				$Mensaje_Alerta->imprimir();
+		}
+		finally {
+    			
+  				$JS_EN_PHP->limpiar('footer_cuenta_crear','<button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>');
+  		}
+				
+		
+	}
+
 	/*
 	===============================================================================
 				Funcion listar_sucursales trae todos las sucursales

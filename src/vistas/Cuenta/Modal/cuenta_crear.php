@@ -23,18 +23,23 @@
             
             <div class="form-group">
                 <label class="control-label">Rol</label>
-                    <select class="form-control" id="alta_cuenta_rol" placeholder="Seleccione un rol">
-                      
-                      <div id="registro_dueño">
+                    <select class="form-control" id="alta_cuenta_rol" placeholder="Seleccione un rol" onchange="ocultar_div()" >
+                        <option>Vacio</option>
                         <option>Dueño</option>
-                      </div>
-                      
-                      <div id="registro_guardian">
                         <option>Guardian</option>
-                    </div>
-                    </select>
+                    </select>    
             </div>
 
+            <div id="registro_dueño" style="display: none;">
+              <?php include("../vistas/Registros/registro_dueño.php");?>
+            </div>
+            
+            <div id="registro_guardian" style="display: none;">
+            <?php include("../vistas/Registros/registro_guardian.php");?>
+          </div>
+              <script>
+                
+              </script>
         </div>
       </form>
     </div>
@@ -51,10 +56,40 @@
 
 
 
-<script type="text/javascript">
-    var rol = document.getElementById('alta_cuenta_rol').value;
+<script>
+    function ocultar_div (){
+      var estado_select = $('#alta_cuenta_rol').val();
+      console.log(estado_select);
+      var registro_dueño = document.getElementById("registro_dueño");
+      var registro_guardian = document.getElementById("registro_guardian");
+      
+      if (registro_dueño.style.display === "none") 
+      {
+        registro_dueño.style.display = "block";
+        registro_guardian.style.display = "none";
 
-    if(rol == "Dueño"){
+      } else if (registro_guardian.style.display === "none"){
+        registro_dueño.style.display = "none";
+        registro_guardian.style.display = "block";
+      }
 
+      if(estado_select === 'Vacio'){
+        registro_dueño.style.display = "none";
+        registro_guardian.style.display = "none";
+      }
+            
+    }
+</script>
+
+<script>
+    function ocultar_div_guardian() {
+      
+            if (registro_guardian.style.display === "none") 
+            {
+              registro_guardian.style.display = "block";
+            } else {
+              registro_guardian.style.display = "none";
+            }
+            
     }
 </script>
