@@ -31,3 +31,6 @@
                 <input class="form-control" id="alta_dueño_telefono" placeholder="Ingrese una contraseña" type="number" required>
             </div>
 
+
+            
+

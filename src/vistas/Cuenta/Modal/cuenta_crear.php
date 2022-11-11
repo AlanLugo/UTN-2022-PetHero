@@ -45,7 +45,7 @@
     </div>
     <div class="modal-footer" id="footer_cuenta_crear">
 
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_cuenta','cuenta/alta_cuenta',[$('#alta_cuenta_usuario').val(),$('#alta_cuenta_password').val(),$('#alta_cuenta_rol').val()]);">Crear cuenta
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_cuenta','login/registro',[$('#alta_cuenta_usuario').val(),$('#alta_cuenta_password').val(),$('#alta_cuenta_rol').val(),$('#alta_dueño_nombre').val(),$('#alta_dueño_dni').val(),$('#alta_dueño_direccion').val(),$('#alta_dueño_telefono').val(),$('#alta_guardian_nombre').val(),$('#alta_guardian_direccion').val(),$('#alta_guardian_cuil').val(),$('#alta_guardian_precio_estimado').val(),$('#alta_guardian_tamaño_mascota').val(),$('#alta_guardian_raza_dia').val()]);">Crear cuenta
     
     </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
