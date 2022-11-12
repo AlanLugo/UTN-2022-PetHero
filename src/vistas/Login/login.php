@@ -14,7 +14,7 @@
         <label><input type="checkbox" value="remember-me"> Recordar</label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="button" onclick="Procesar('resultado_login', 'login/ingresar', [$('#usuario').val(), $('#contrasena').val()]);return false;">Entrar</button>
-      <button class="btn btn-lg btn-success btn-block" type="button" data-toggle="modal" data-target="#modal_alta_cuenta" onclick="Procesar('modal_alta_cuenta', 'cuenta/modal_cuenta_crear', []);return false;">Registrar cuenta</button>
+      <button class="btn btn-lg btn-success btn-block" type="button" data-toggle="modal" data-target="#modal_alta_cuenta" onclick="Procesar('modal_alta_cuenta', 'login/modal_cuenta_crear', []);return false;">Registrar cuenta</button>
       
   </div>
 </div>

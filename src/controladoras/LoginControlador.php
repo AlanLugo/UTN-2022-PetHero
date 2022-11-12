@@ -17,6 +17,13 @@ class LoginControlador
 		$this->DueñoDAO = \daos\Dueño\DueñoMysqlDAO::getInstance();
 	}
 
+	public function modal_cuenta_crear()
+	{		
+		
+			include("../vistas/Cuenta/Modal/cuenta_crear.php");	
+		
+	}
+
 	public function ingresar($usuario, $contraseña)
 	{
 		$Mensaje = new \modelos\Auxiliar\MensajeAlerta();
