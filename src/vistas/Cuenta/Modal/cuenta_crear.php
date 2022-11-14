@@ -12,18 +12,18 @@
             <div class="form-group">
                 <label class="control-label"
                 for="inputEmail3">Usuario</label>
-                <input class="form-control" id="alta_cuenta_usuario" placeholder="Ingrese un usuario email" type="email" >
+                <input class="form-control" id="alta_cuenta_usuario" placeholder="Ingrese un usuario email" type="email" required>
             </div>
 
             <div class="form-group">
                 <label class="control-label"
                 for="inputEmail3">Contraseña</label>
-                <input class="form-control" id="alta_cuenta_password" placeholder="Ingrese una contraseña" type="password">
+                <input class="form-control" id="alta_cuenta_password" placeholder="Ingrese una contraseña" type="password" required>
             </div>
             
             <div class="form-group">
                 <label class="control-label">Rol</label>
-                    <select class="form-control" id="alta_cuenta_rol" placeholder="Seleccione un rol" onchange="ocultar_div()" >
+                    <select class="form-control" id="alta_cuenta_rol" placeholder="Seleccione un rol" onchange="ocultar_div()" required>
                         <option>Vacio</option>
                         <option>Dueño</option>
                         <option>Guardian</option>
@@ -63,33 +63,22 @@
       var registro_dueño = document.getElementById("registro_dueño");
       var registro_guardian = document.getElementById("registro_guardian");
       
-      if (registro_dueño.style.display === "none") 
+      if (estado_select === "Dueño") 
       {
         registro_dueño.style.display = "block";
         registro_guardian.style.display = "none";
 
-      } else if (registro_guardian.style.display === "none"){
+      } else if (estado_select === "Guardian")
+      {
         registro_dueño.style.display = "none";
         registro_guardian.style.display = "block";
       }
 
-      if(estado_select === 'Vacio'){
+      if(estado_select === 'Vacio')
+      {
         registro_dueño.style.display = "none";
         registro_guardian.style.display = "none";
       }
-            
-    }
-</script>
-
-<script>
-    function ocultar_div_guardian() {
-      
-            if (registro_guardian.style.display === "none") 
-            {
-              registro_guardian.style.display = "block";
-            } else {
-              registro_guardian.style.display = "none";
-            }
             
     }
 </script>

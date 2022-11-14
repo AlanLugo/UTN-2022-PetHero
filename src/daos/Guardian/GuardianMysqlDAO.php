@@ -84,14 +84,16 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
                 throw new \Exception("Ya existe un guardian con la misma descripcion.");
                 exit();
             }
-            $sql = "INSERT INTO " . $this->tabla . " (nombre,direccion,cuil,disponibilidad,precio,id_cuenta) VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO " . $this->tabla . " (nombre,direccion,cuil,disponibilidad,precio,tamaño_maximo,raza_dia,id_cuenta) VALUES (?,?,?,?,?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
             $query->bindValue(2,$obj->getDireccion());
             $query->bindValue(3,$obj->getCuil());
             $query->bindValue(4,$obj->getDisponibilidad());
             $query->bindValue(5,$obj->getPrecio());
-            $query->bindValue(6,$obj->getId_Cuenta()->getId_Cuenta());
+            $query->bindValue(6,$obj->get_tamaño_maximo());
+            $query->bindValue(7,$obj->get_raza_dia());
+            $query->bindValue(8,$obj->getId_Cuenta()->getId_Cuenta());
             if($query->execute())
             {
                 $obj->setId_Guardian($this->dbh->lastInsertId());

@@ -17,6 +17,59 @@ class LoginControlador
 		$this->DueñoDAO = \daos\Dueño\DueñoMysqlDAO::getInstance();
 	}
 
+	public function index()
+    {
+        $this->listar_cuenta();
+    }
+
+/*
+	===============================================================================
+				Funcion listar_disponibilidades trae todos las disponibilidades
+				en un array de objetos tipo Disponibilidad y las muestra en una vista.
+	===============================================================================
+*/
+    public function listar_cuenta()
+    {
+        try
+        {
+            $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
+            $Disponibilidades = $this->CuentaDAO->listar();
+            include("../vistas/Cuenta/Modal/cuenta_crear.php");
+        
+        }catch (\Exception $e){
+            $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+            $Mensaje_Alerta->imprimir();
+        }
+    }
+
+	public function listar_dueño()
+    {
+        try
+        {
+            $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
+            $Disponibilidades = $this->DueñoDAO->listar();
+            include("../vistas/D/Modal/cuenta_crear.php");
+        
+        }catch (\Exception $e){
+            $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+            $Mensaje_Alerta->imprimir();
+        }
+    }
+
+	public function listar_guardian()
+    {
+        try
+        {
+            $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
+            $Disponibilidades = $this->GuardianDAO->listar();
+            include("../vistas/Cuenta/Modal/cuenta_crear.php");
+        
+        }catch (\Exception $e){
+            $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+            $Mensaje_Alerta->imprimir();
+        }
+    }
+
 	public function modal_cuenta_crear()
 	{		
 		
@@ -90,7 +143,7 @@ class LoginControlador
 	public function registro
 	($usuario, $password, $rol, 
 	$nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, 
-	$nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian)
+	$nombre_guardian, $direccion_guardian, $cuil_guardian, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian)
 	{		
 		
 		try
@@ -113,15 +166,15 @@ class LoginControlador
 					else
 					{
 							$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
-							$this->crear_registro_cuenta($usuario, $password, $rol);
-							$this->crear_registro_dueño($nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, $Nueva_Cuenta);
+							$Nueva_Cuenta = $this->crear_registro_cuenta($usuario, $password, $rol);
+							$Nueva_Dueño = $this->crear_registro_dueño($nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, $Nueva_Cuenta);
 
 							if($Nueva_Cuenta!=NULL)
 							{
 								$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Cuenta creada correctamente..');
 									$Mensaje_Alerta->imprimir();
 									
-								$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","cuenta/listar_cuenta",[]);');
+								$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","login/listar_cuenta",[]);');
 							}
 					}
 				}else if($rol == "Guardian")
@@ -134,15 +187,15 @@ class LoginControlador
 					else
 					{
 							$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
-							$this->crear_registro_cuenta($usuario, $password, $rol);
-							$this->crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian, $Nueva_Cuenta);
+							$Nueva_Cuenta = $this->crear_registro_cuenta($usuario, $password, $rol);
+							$Nuevo_Guardian =$this->crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, true, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian, $Nueva_Cuenta);
 
 							if($Nueva_Cuenta!=NULL)
 							{
 								$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Cuenta creada correctamente..');
 									$Mensaje_Alerta->imprimir();
 									
-								$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","cuenta/listar_cuenta",[]);');
+								$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","login/listar_cuenta",[]);');
 							}
 					}
 				}
@@ -157,25 +210,6 @@ class LoginControlador
   		}
 	}
 
-	/*
-	===============================================================================
-				Funcion listar_ trae todos las 
-				en un array de objetos tipo  y las muestra en una vista.
-	===============================================================================
-*/	
-	public function lista_clientes()
-	{	
-		try 
-		{
-			return $this->ClienteDAO->listar();		
-				
-		} catch (\Exception $e) {
-			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
-  			$Mensaje_Alerta->imprimir();  			
-		}	
-
-		
-	}
 /*
 	===============================================================================
 				Funcion listar_ trae todos las 
@@ -213,6 +247,7 @@ class LoginControlador
                         
 					$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","login/listar_cuenta",[]);');
 				}
+				return $Nueva_Cuenta;
 		}catch (\Exception $e) {
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());
 			$Mensaje_Alerta->imprimir();
@@ -227,6 +262,12 @@ class LoginControlador
 	{
 		try
 		{
+		
+		echo("Nombre dueño: ".$nombre_dueño);
+		echo("Dni dueño: ".$dni_dueño);
+		echo("Direccion dueño: ".$direccion_dueño);
+		echo("Telefono dueño: ".$telefono_dueño);
+		print_r($id_cuenta);
 		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 		$Nuevo_Dueño = new \modelos\Usuario\Dueño('',$nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, $id_cuenta);
 		if(empty($nombre_dueño) Or empty($dni_dueño) Or empty($direccion_dueño) Or empty($telefono_dueño))

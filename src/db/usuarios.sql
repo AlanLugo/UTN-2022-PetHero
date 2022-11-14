@@ -26,6 +26,8 @@ CREATE TABLE guardianes (
     cuil varchar(32) DEFAULT NULL,
     disponibilidad boolean DEFAULT true,
     precio decimal(50) DEFAULT NULL,
+    tamaño_maximo varchar(32) DEFAULT NULL,
+    raza_dia varchar(32) DEFAULT NULL,
     id_cuenta int,
     PRIMARY KEY (id_guardian),
 	UNIQUE KEY unq_guardianes_cuil (cuil),

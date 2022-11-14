@@ -75,7 +75,48 @@ class DueñoMysqlDAO extends SingletoneAbstractDAO implements IDueñoDAO
 	}
 	public function actualizar($id){}
 	public function borrar($id){}
-	public function crear($id){}
+
+
+	public function crear($obj)
+	{
+		try{
+            if($this->leer($obj) != NULL)
+            {
+                throw new \Exception("Ya existe un dueño con la misma descripcion.");
+                exit();
+            }
+			/*
+				id_dueño int(11) NOT NULL AUTO_INCREMENT,
+				nombre varchar(50) NOT NULL,
+				dni varchar(50) NOT NULL,
+				direccion varchar(50) NOT NULL,
+				telefono int(50) NOT NULL,
+				id_cuenta int,
+			*/
+            $sql = "INSERT INTO " . $this->tabla . " (nombre,dni,direccion,telefono,id_cuenta) VALUES (?,?,?,?,?)";
+            $query = $this->dbh->prepare($sql);
+            $query->bindValue(1,$obj->getNombre());
+            $query->bindValue(2,$obj->getDni());
+            $query->bindValue(3,$obj->getDireccion());
+			$query->bindValue(4,$obj->getTelefono());
+			$query->bindValue(5,$obj->getId_Cuenta()->getId_Cuenta());
+            if($query->execute())
+            {
+                $obj->setId_Dueño($this->dbh->lastInsertId());
+                return $obj;
+            }
+            else
+            {
+                return NULL;
+            }
+        }catch(PDOException $e){
+
+            print "Error!: " . $e->getMessage();
+
+        }
+
+	}
+
 	public function listar()
 	{
 		try {
