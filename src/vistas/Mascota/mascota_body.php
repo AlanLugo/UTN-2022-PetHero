@@ -1,30 +1,33 @@
 <?php
+
+use modelos\Mascota\Mascota;
+
 foreach($Mascotas as $Mascota){
 ?>
     <div class="col-sm-4">
    
-    <div class="card card-price">
-  <div class="card-img">
-    <a href="#">
-      <img src="<?php echo $Mascota->getImagen();?>" class="img-responsive">
-      <div class="card-caption">
-        <span class="h2"><?php echo $Mascota->getNombre();?></span>
-        <p>100% silk</p>
-      </div>
-    </a>
+   <div class="card card-price">
+ <div class="card-img">
+   <a href="#">
+     <img src="<?php echo $Mascota->getImagen();?>" class="img-responsive">
+     <div class="card-caption">
+     </div>
+   </a>
+ </div>
+ <div class="card-body">
+   <div class="lead"><span class="h2"><?php echo $Mascota->getNombre();?></span></div>
+   <ul class="details">
+     <li> Raza : <?php echo $Mascota->getRaza();?></li>
+     <li> Tamaño : <?php echo $Mascota->getTamaño();?></li>
+     <li><?php echo $Mascota->getObservaciones();?></li>
+   </ul>
+    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#modal_editar_mascota" onclick="Procesar('modal_editar_mascota','mascota/modal_mascota_modificar',['<?php echo $Mascota->getId_Mascota();?>']);return false;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+  </button> 
+
+  <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#modal_eliminar_confirmacion" onclick="Procesar('modal_eliminar_confirmacion','mascota/eliminar_mascota_confirmacion',['<?php echo $Mascota->getId_Mascota();?>']);return false;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+  </button>
   </div>
-  <div class="card-body">
-    <div class="price">$20 <small>each</small></div>
-    <div class="lead">Wrap yourself in luxury</div>
-    <ul class="details">
-      <li>A stitch in time saves nine.</li>
-      <li>All good things come to those who wait.</li>
-      <li><b>Shipping:</b> $10 in USA, $15 outside USA</li>
-    </ul>
-    <a href="#" class="btn btn-primary btn-lg btn-block buy-now">
-      Buy now <span class="glyphicon glyphicon-triangle-right"></span>
-    </a>
-  </div>
+  
 </div>
     </div>
 <?php

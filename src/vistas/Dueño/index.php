@@ -24,7 +24,7 @@
 		<ul class="nav navbar-nav">
 			<!-- contenido = div contenidoGuardian (vista)-GuardianControlador(index y listar_guardian)  -->
 			<li><a href="#" data-toggle="modal" onclick="Procesar('contenido','procesarindex/index',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mis Mascotas</a></li>
-			<li><a href="#" data-toggle="modal" onclick="Procesar('contenido','procesarindex/index',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mis Reservas</a></li>
+			<li><a href="#" data-toggle="modal" onclick="Procesar('body-panel-dueño','reserva/index',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mis Reservas</a></li>
 			<li><a href="#" data-toggle="modal" onclick="Procesar('contenido','procesarindex/index',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mis Guardian</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
@@ -40,12 +40,13 @@
 </nav>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
 	<div class="margin-bootom-sm" id="body-panel-dueño">
     <?php print_r($Dueño); ?>
 		<script type="text/javascript">
-			Procesar('body-panel-dueño','mascota/lista_mascotas_duenio',[<?php echo $Dueño->getId_Dueño();?>]);
+			Procesar('body-panel-dueño','mascota/listar_mascota_duenio',[<?php echo $Dueño->getId_Dueño();?>]);
 		</script>
 	</div>
 		

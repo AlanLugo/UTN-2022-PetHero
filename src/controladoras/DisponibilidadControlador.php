@@ -155,8 +155,7 @@ public function modificar_disponibilidad($id_disponibilidad,$fechaInicio,$fechaF
 		}
 		else
 		{
-			throw new \Exception("Error al modificar el articulo");
-				
+			throw new \Exception("Error al modificar el articulo");		
 		}
     } catch (\Exception $e) {
             $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());
@@ -212,6 +211,27 @@ public function lista_disponibilidades()
 	try 
 	{
 		return $this->DisponibilidadDAO->listar();		
+			
+	} catch (\Exception $e) {
+		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+		  $Mensaje_Alerta->imprimir();  			
+	}	
+
+	
+}
+
+/*
+	===============================================================================
+		Funcion que se encarga retornar un arreglo con objetos de disponibilidad		
+	===============================================================================
+*/	
+public function listar_disponibilidad_guardian_raza_tamanio($raza_dia, $tamaño_maximo)
+{	
+	try 
+	{
+		$Guardian = new \modelos\Usuario\Guardian('','','','','','',$tamaño_maximo,$raza_dia);
+		$Disponibilidades = $this->DisponibilidadDAO->listar_disponibilidad_guardian_raza_tamanio($Guardian);
+		include('../vistas/Reserva/disponibilidad_reserva.php');		
 			
 	} catch (\Exception $e) {
 		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());

@@ -55,12 +55,12 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 		}
 	}
 
-	public function leer_x_nombre($obj){
+	public function leer_x_cuil($obj){
 
 		try {			
-			$sql = "SELECT * from ".$this->tabla." WHERE nombre = ? ";
+			$sql = "SELECT * from ".$this->tabla." WHERE cuil = ? ";
 			$query = $this->dbh->prepare($sql);
-			$query->bindValue(1,$obj->getNombre());
+			$query->bindValue(1,$obj->getcuil());
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Usuario\Guardian');
 			$obj = $query->fetch();			
@@ -75,7 +75,42 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 
 	public function actualizar($id){}
 	public function borrar($id){}
-	public function crear($id){}
+
+	public function crear($obj){
+
+        try{
+            if($this->leer($obj) != NULL)
+            {
+                throw new \Exception("Ya existe un guardian con la misma descripcion.");
+                exit();
+            }
+            $sql = "INSERT INTO " . $this->tabla . " (nombre,direccion,cuil,disponibilidad,precio,tamaño_maximo,raza_dia,id_cuenta) VALUES (?,?,?,?,?,?,?,?)";
+            $query = $this->dbh->prepare($sql);
+            $query->bindValue(1,$obj->getNombre());
+            $query->bindValue(2,$obj->getDireccion());
+            $query->bindValue(3,$obj->getCuil());
+            $query->bindValue(4,$obj->getDisponibilidad());
+            $query->bindValue(5,$obj->getPrecio());
+            $query->bindValue(6,$obj->get_tamaño_maximo());
+            $query->bindValue(7,$obj->get_raza_dia());
+            $query->bindValue(8,$obj->getId_Cuenta()->getId_Cuenta());
+            if($query->execute())
+            {
+                $obj->setId_Guardian($this->dbh->lastInsertId());
+                return $obj;
+            }
+            else
+            {
+                return NULL;
+            }
+        }catch(PDOException $e){
+
+            print "Error!: " . $e->getMessage();
+
+        }
+
+	}
+
 	public function listar()
 	{
 		try {
@@ -97,4 +132,6 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 			
 		}
 	}
+
+
 }
