@@ -26,8 +26,8 @@ CREATE TABLE guardianes (
     cuil varchar(32) DEFAULT NULL,
     disponibilidad boolean DEFAULT true,
     precio decimal(50) DEFAULT NULL,
-    tamaño_maximo varchar(32) DEFAULT NULL,
-    raza_dia varchar(32) DEFAULT NULL,
+    tamaño_maximo varchar(45) DEFAULT NULL,
+    raza_dia varchar(45) DEFAULT NULL,
     id_cuenta int,
     PRIMARY KEY (id_guardian),
 	UNIQUE KEY unq_guardianes_cuil (cuil),
@@ -45,7 +45,7 @@ CREATE TABLE dueños (
 	UNIQUE KEY unq_dueños_dni (dni),
     FOREIGN KEY fk_dueños_id_cuenta (id_cuenta) REFERENCES cuentas(id_cuenta)
 );
-DROP TABLE mascotas;
+
 CREATE TABLE mascotas (
 	id_mascota int(11) NOT NULL AUTO_INCREMENT,
     nombre varchar(50) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE mascotas (
 	PRIMARY KEY (id_mascota),
     FOREIGN KEY fk_mascotas_id_dueño (id_dueño) REFERENCES dueños(id_dueño)
 );
-DROP TABLE disponibilidades;
+
 CREATE TABLE disponibilidades (
 	id_disponibilidad int(11) NOT NULL AUTO_INCREMENT,
     fecha_inicio datetime NOT NULL,
@@ -66,6 +66,21 @@ CREATE TABLE disponibilidades (
     id_guardian int,
     PRIMARY KEY (id_disponibilidad),
     FOREIGN KEY fk_disponibilidades_id_guardian (id_guardian) REFERENCES guardianes(id_guardian)
+);
+
+CREATE TABLE reservas (
+	id_reserva int(11) NOT NULL AUTO_INCREMENT,
+    fecha_inicio datetime NOT NULL,
+    fecha_final datetime NOT NULL,
+    horario datetime NOT NULL,
+    estado boolean NOT NULL,
+    id_mascota int,
+    id_dueño int,
+    id_guardian int,
+    PRIMARY KEY (id_reserva),
+    FOREIGN KEY fk_reserva_id_mascota (id_mascota) REFERENCES mascotas(id_mascota),
+    FOREIGN KEY fk_reserva_id_dueño (id_dueño) REFERENCES dueños(id_dueño),
+    FOREIGN KEY fk_reserva_id_guardian (id_guardian) REFERENCES guardianes(id_guardian)
 );
 
 -- INSERT´S DATOS DEFAULT
@@ -79,8 +94,8 @@ INSERT INTO pethero.cuentas
 VALUES(2, 'alan@gmail.com', 'asd', 'Dueño');
 
 INSERT INTO pethero.guardianes
-(id_guardian, nombre, direccion, cuil, disponibilidad, precio, id_cuenta)
-VALUES(1, 'Chris', 'Vertiz 2134', '12313123', 1, 100, 1);
+(id_guardian, nombre, direccion, cuil, disponibilidad, tamaño_maximo, raza_dia, precio, id_cuenta)
+VALUES(1, 'Chris', 'Vertiz 2134', '12313123', 1, Chico, Caniche, 100, 1);
 
 INSERT INTO pethero.dueños
 (id_dueño, nombre, dni, direccion, telefono, id_cuenta)

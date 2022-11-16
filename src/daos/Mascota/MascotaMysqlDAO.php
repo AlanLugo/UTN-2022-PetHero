@@ -78,7 +78,7 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
     public function actualizar($obj)
     {
         try {
-            $obj_existente = $this->buscar_x_nombre($obj);
+            $obj_existente = $this->buscar_x_id_mascota($obj);
             if($obj_existente != NULL && $obj_existente->getId_Mascota() != $obj->getId_Mascota())
             {
                 throw new \Exception("Error ya existe un registro con el mismo nombre.");
@@ -134,7 +134,7 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
     {
         try{
             
-            if($this->buscar_x_nombre($obj) != NULL)
+            if($this->buscar_x_id_mascota($obj) != NULL)
             {
                 throw new \Exception("Ya existe un tipo de mascota con la misma descripcion.");
                 exit();
@@ -190,6 +190,25 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
             $sql = "SELECT * from ".$this->tabla." WHERE nombre = ? order by nombre";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
+            $query->execute();
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
+            $obj = $query->fetch();
+            return $obj;
+
+        }catch(PDOException $e){
+
+            print  "Error!: " . $e->getMessage();
+
+        }
+    }
+
+    public function buscar_x_id_mascota($obj)
+    {
+        try {
+
+            $sql = "SELECT * from ".$this->tabla." WHERE id_mascota = ? order by id_mascota";
+            $query = $this->dbh->prepare($sql);
+            $query->bindValue(1,$obj->getId_mascota());
             $query->execute();
             $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
             $obj = $query->fetch();

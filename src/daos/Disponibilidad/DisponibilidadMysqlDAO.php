@@ -229,6 +229,47 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 		}
 	}
 
+    public function listar_disponibilidad_guardian_raza_tamanio($obj)
+	{
 
+
+		try {
+			$sql = "SELECT id_disponibilidad,fecha_inicio,fecha_final,disponible,disponibilidades.id_guardian as id_guardian from ".$this->tabla." INNER JOIN guardianes ON disponibilidades.id_guardian = guardianes.id_guardian WHERE tamaño_maximo = ? AND raza_dia = ?";
+			$query = $this->dbh->prepare($sql);
+			$query->bindValue(1,$obj->get_tamaño_maximo());
+			$query->bindValue(2,$obj->get_raza_dia());
+			$query->execute();
+			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
+			$Disponibilidad = NULL;
+			while ($row = $query->fetch()) {				
+				$Disponibilidad[] = $row;
+			}
+			return $Disponibilidad;
+			
+		}catch(PDOException $e){
+			
+			print "Error!: " . $e->getMessage();
+			
+		}
+	}
+
+    public function buscar_x_id_disponibilidad($obj)
+    {
+        try {
+
+            $sql = "SELECT * from ".$this->tabla." WHERE id_disponibilidad = ? order by id_disponibilidad";
+            $query = $this->dbh->prepare($sql);
+            $query->bindValue(1,$obj->getId_Disponibilidad());
+            $query->execute();
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
+            $obj = $query->fetch();
+            return $obj;
+
+        }catch(PDOException $e){
+
+            print  "Error!: " . $e->getMessage();
+
+        }
+    }
 }
 ?>
