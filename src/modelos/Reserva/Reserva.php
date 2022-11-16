@@ -8,18 +8,16 @@ class Reserva{
     protected $id_reserva;
     protected $fecha_inicio;
     protected $fecha_final;
-    protected $horarios;
     protected $estado;
     protected $id_mascota;
     protected $id_dueño;
     protected $id_guardian;
 
-    public function __construct($id_reserva = '', $fecha_inicio = '', $fecha_final = '', $horario = '', $estado = '',\modelos\Mascota\Mascota $id_mascota = NULL,\modelos\Usuario\Dueño $id_dueño = NULL, \modelos\Usuario\Guardian $id_guardian = NULL)
+    public function __construct($id_reserva = '', $fecha_inicio = '', $fecha_final = '', $estado = '',\modelos\Mascota\Mascota $id_mascota = NULL,\modelos\Usuario\Dueño $id_dueño = NULL, \modelos\Usuario\Guardian $id_guardian = NULL)
     {
         $this->setId_reserva($id_reserva);
         $this->setFecha_inicio($fecha_inicio);
         $this->setFecha_final($fecha_final);
-        $this->setHorario($horario);
         $this->setEstado($estado);
         $this->setId_mascota($id_mascota);
         $this->setId_dueño($id_dueño);
@@ -67,21 +65,6 @@ class Reserva{
 
         return $this;
     }
-
-
-    public function getHorario()
-    {
-        return $this->horario;
-    }
-
-
-    public function setHorario($horario)
-    {
-        $this->horario = $horario;
-
-        return $this;
-    }
-
 
     public function getEstado()
     {

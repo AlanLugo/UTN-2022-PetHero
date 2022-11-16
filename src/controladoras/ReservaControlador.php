@@ -12,6 +12,7 @@ class ReservaControlador
         $this->ReservaDAO = \daos\Reserva\ReservaMysqlDAO::getInstance();
 		$this->DisponibilidadDAO = \daos\Disponibilidad\DisponibilidadMysqlDAO::getInstance();
 		$this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
+		$this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
     }
 
 /*
@@ -52,8 +53,10 @@ class ReservaControlador
 */	
     public function modal_reserva_crear($id)
 	{		
+			$Dueño = unserialize($_SESSION['Dueño']);
 			$Disponibilidad_id = new \modelos\Disponibilidad\Disponibilidad($id);
 			$Disponibilidad = $this->DisponibilidadDAO->buscar_x_id_disponibilidad($Disponibilidad_id);
+			$Mascotas = $this->MascotaDAO->listar_x_dueño_tamaño_raza($Dueño->getId_Dueño(), $Disponibilidad->getId_Guardian()->get_tamaño_maximo(), $Disponibilidad->getId_Guardian()->get_raza_dia());
 			include("../vistas/Reserva/Modal/reserva_crear.php");	
 		
 	}
@@ -103,14 +106,14 @@ class ReservaControlador
 	===============================================================================
 	
 */	
-	public function alta_reserva($fechaInicio, $fechaFinal)
+	public function alta_reserva($fecha_inicio,$fecha_final,$estado,$id_mascota,$id_dueño,$id_guardian)
 	{		
 		
 		try
 		{
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();					
 				$Dueño = unserialize($_SESSION['Dueño']);		
-				$Nueva_reserva = new \modelos\Reserva\Reserva('',$fechaInicio,$fechaFinal,true,$Dueño);
+				$Nueva_reserva = new \modelos\Reserva\Reserva('',$fecha_inicio,$fecha_final,true,$Dueño);
 				if(empty($Nueva_reserva->getFecha_Inicio()) Or empty($Nueva_reserva->getFecha_Final()))
 				{
 					throw new \Exception("Campo/s vacio/s.");
@@ -141,13 +144,13 @@ class ReservaControlador
 				de reserva			
 	===============================================================================
 */	
-public function modificar_reserva($id_reserva,$fechaInicio,$fechaFinal,$horarios,$estado,$id_mascota,$id_dueño,$id_guardian)
+public function modificar_reserva($id_reserva,$fechaInicio,$fechaFinal,$estado,$id_mascota,$id_dueño,$id_guardian)
 {
     try
     {
         $JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 		$Guardian = unserialize($_SESSION['Guardian']);
-        $reserva = new \modelos\Reserva\Reserva($id_reserva,$fechaInicio,$fechaFinal,$horarios,$estado,$id_mascota,$id_dueño,$id_guardian);			
+        $reserva = new \modelos\Reserva\Reserva($id_reserva,$fechaInicio,$fechaFinal,$estado,$id_mascota,$id_dueño,$id_guardian);			
 		$reserva = $this->ReservaDAO->actualizar($reserva);	
 		if($reserva!=NULL)
 		{

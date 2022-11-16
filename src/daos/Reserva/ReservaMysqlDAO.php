@@ -102,7 +102,6 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getFecha_inicio());
             $query->bindValue(2,$obj->getFecha_final());
-            $query->bindValue(3,$obj->getHorarios());
             $query->bindValue(3,$obj->getEstado());
             $query->bindValue(4,$obj->getId_reserva());
             if($query->execute())
@@ -150,16 +149,15 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
                 throw new \Exception("Ya existe una disponibilidad con la misma descripcion.");
                 exit();
             }*/
-            $sql = "INSERT INTO " . $this->tabla . " (fecha_inicio,fecha_final,horario,estado,id_mascota,id_dueño,id_guardian) VALUES (?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO " . $this->tabla . " (fecha_inicio,fecha_final,estado,id_mascota,id_dueño,id_guardian) VALUES (?,?,?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             //seguir aca 
             $query->bindValue(1,$obj->getFechaInicio());
             $query->bindValue(2,$obj->getFechaFinal());
-            $query->bindValue(3,$obj->getHorarios());
-            $query->bindValue(4,$obj->getEstado());
-            $query->bindValue(5,$obj->getId_mascota());
-            $query->bindValue(6,$obj->getId_dueño());
-            $query->bindValue(7,$obj->getId_guardian()->getId_guardian());
+            $query->bindValue(3,$obj->getEstado());
+            $query->bindValue(4,$obj->getId_mascota()->getId_mascota());
+            $query->bindValue(5,$obj->getId_dueño()->getId_dueño());
+            $query->bindValue(6,$obj->getId_guardian()->getId_guardian());
             if($query->execute())
             {
                 $obj->setId_reserva($this->dbh->lastInsertId());

@@ -1,8 +1,3 @@
-
-<?php
-use modelos\Usuario\Guardian;
-?>
-
 <div class="modal-dialog">
     <!-- Modal content-->
   <div class="modal-content">

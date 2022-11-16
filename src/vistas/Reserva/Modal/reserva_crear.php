@@ -3,12 +3,12 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Crear Disponibilidad</h4>
+      <h4 class="modal-title">Crear Reserva</h4>
     </div>
     <div class="modal-body row">
       <form class="col-xs-12">
-        <div id="formulario_alta_disponibilidad">
-          
+        <div id="formulario_alta_reserva">
+
             <div class="form-group">
                 <label class="control-label"
                 for="inputEmail3">Fecha Inicio: <?php echo $Disponibilidad->getFechaInicio();?></label>
@@ -18,13 +18,43 @@
                 <label class="control-label"
                 for="inputEmail3">Fecha Final: <?php echo $Disponibilidad->getFechaFinal();?></label>
             </div>
-        
-        </div>
+
+            <div class="form-group">
+                <label class="control-label"
+                for="inputEmail3">Nombre guardian: <?php echo $Disponibilidad->getId_Guardian()->getNombre();?></label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label"
+                for="inputEmail3">Precio jornada: <?php echo $Disponibilidad->getId_Guardian()->getPrecio();?></label>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label">Mis mascotas</label>
+                  <select class="form-control" id="seleccion_mascota" required>    
+                    <?php
+                      foreach($Mascotas as $Mascota){
+                    ?>
+                        <option><?php echo $Mascota->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
+            </div>
+            <!--
+              protected $id_reserva;
+              protected $fecha_inicio;
+              protected $fecha_final;
+              protected $estado;
+              protected $id_mascota;
+              protected $id_dueño;
+              protected $id_guardian; 
+            -->
       </form>
     </div>
     <div class="modal-footer" id="footer_disponibilidad_crear">
 
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_disponibilidad','disponibilidad/alta_disponibilidad',[$('#alta_disponibilidad_fecha_inicio').val(),$('#alta_disponibilidad_fecha_final').val()]);">Crear</button>
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_reserva','reserva/alta_reserva',[$('#<?php echo $Disponibilidad->getFechaInicio();?>').val(),$('#<?php echo $Disponibilidad->getFechaFinal();?>').val(),$('#').val()]);">Crear</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
   </div>

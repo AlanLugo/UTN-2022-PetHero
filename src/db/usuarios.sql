@@ -72,7 +72,6 @@ CREATE TABLE reservas (
 	id_reserva int(11) NOT NULL AUTO_INCREMENT,
     fecha_inicio datetime NOT NULL,
     fecha_final datetime NOT NULL,
-    horario datetime NOT NULL,
     estado boolean NOT NULL,
     id_mascota int,
     id_dueño int,
