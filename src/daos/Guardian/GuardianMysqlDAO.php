@@ -133,5 +133,23 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 		}
 	}
 
+	public function buscar_x_id_guardian($obj)
+    {
+        try {
+
+            $sql = "SELECT * from ".$this->tabla." WHERE id_guardian = ? order by id_guardian";
+            $query = $this->dbh->prepare($sql);
+            $query->bindValue(1,$obj->getId_Guardian());
+            $query->execute();
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Usuario\Guardian');
+            $obj = $query->fetch();
+            return $obj;
+
+        }catch(PDOException $e){
+
+            print  "Error!: " . $e->getMessage();
+
+        }
+    }
 
 }

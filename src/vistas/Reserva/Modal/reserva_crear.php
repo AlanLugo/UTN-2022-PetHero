@@ -35,7 +35,7 @@
                     <?php
                       foreach($Mascotas as $Mascota){
                     ?>
-                        <option><?php echo $Mascota->getNombre();?></option>
+                        <option value="<?php echo $Mascota->getId_mascota();?>"><?php echo $Mascota->getNombre();?></option>
                     <?php      
                     }     
                     ?>
@@ -52,9 +52,9 @@
             -->
       </form>
     </div>
-    <div class="modal-footer" id="footer_disponibilidad_crear">
+    <div class="modal-footer" id="footer_reserva_crear">
 
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_reserva','reserva/alta_reserva',[$('#<?php echo $Disponibilidad->getFechaInicio();?>').val(),$('#<?php echo $Disponibilidad->getFechaFinal();?>').val(),$('#').val()]);">Crear</button>
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_reserva','reserva/alta_reserva',['<?php echo $Disponibilidad->getFechaInicio();?>','<?php echo $Disponibilidad->getFechaFinal();?>',$('#seleccion_mascota').val(),'<?php echo $Disponibilidad->getId_Guardian()->getId_Guardian();?>']);">Crear</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
   </div>
