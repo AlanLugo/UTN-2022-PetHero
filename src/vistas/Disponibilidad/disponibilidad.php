@@ -1,9 +1,4 @@
-<?php
-if($Disponibilidades==NULL)
-{
-  throw new \Exception("No hay registros almacenados...");
-}
-?>
+
 <div class="row" id="tabla_disponibilidad">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default ">
@@ -12,6 +7,12 @@ if($Disponibilidades==NULL)
       </button>
     </div>
     <div id="tabla_disponibilidad_body">
+    <?php
+      if($Disponibilidades==NULL)
+      {
+        throw new \Exception("No hay registros almacenados...");
+      }
+      ?>
     <?php
     include("disponibilidad_body.php");
     ?>
