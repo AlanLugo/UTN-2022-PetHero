@@ -9,9 +9,10 @@ class ReservaControlador
 
     function __construct()
     {
+		$this->DueñoDAO = \daos\Dueño\DueñoMysqlDAO::getInstance();
+		$this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
         $this->ReservaDAO = \daos\Reserva\ReservaMysqlDAO::getInstance();
 		$this->DisponibilidadDAO = \daos\Disponibilidad\DisponibilidadMysqlDAO::getInstance();
-		$this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
 		$this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
     }
 
@@ -35,9 +36,10 @@ class ReservaControlador
     public function listar_reservas()
     {
         try
-        {
+        {	
+			$Dueño = unserialize($_SESSION['Dueño']);
             $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
-            $Reserva = $this->ReservaDAO->listar();
+            $Reservas = $this->ReservaDAO->listar_x_dueño($Dueño);
             include("../vistas/Reserva/reserva.php");
         
         }catch (\Exception $e){
@@ -128,14 +130,21 @@ class ReservaControlador
 	===============================================================================
 	
 */	
-	public function alta_reserva($fecha_inicio,$fecha_final,$estado,$id_mascota,$id_dueño,$id_guardian)
+	public function alta_reserva($fecha_inicio,$fecha_final,$id_mascota,$id_guardian)
 	{		
 		
 		try
-		{
+		{		
+				print_r ("Este es mi id mascota: ".$id_mascota);
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();					
-				$Dueño = unserialize($_SESSION['Dueño']);		
-				$Nueva_reserva = new \modelos\Reserva\Reserva('',$fecha_inicio,$fecha_final,true,$Dueño);
+				$Dueño = unserialize($_SESSION['Dueño']);
+
+				$Mascota = new \modelos\Mascota\Mascota($id_mascota);
+				$Guardian = new \modelos\Usuario\Guardian($id_guardian);
+
+				$Mascota = $this->MascotaDAO->buscar_x_id_mascota($Mascota);
+				$Guardian = $this->GuardianDAO->buscar_x_id_guardian($Guardian);
+				$Nueva_reserva = new \modelos\Reserva\Reserva('',$fecha_inicio,$fecha_final,false,$Mascota,$Dueño,$Guardian);
 				if(empty($Nueva_reserva->getFecha_Inicio()) Or empty($Nueva_reserva->getFecha_Final()))
 				{
 					throw new \Exception("Campo/s vacio/s.");
@@ -146,7 +155,7 @@ class ReservaControlador
 				{
 					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','reserva creada correctamente..');
 						$Mensaje_Alerta->imprimir();
-					$JS_EN_PHP->ejecutar('Procesar("tabla_reserva","reserva/listar_reserva_guardian",['.$Dueño->getId_Dueño().']);');
+					$JS_EN_PHP->ejecutar('Procesar("tabla_reserva","reserva/listar_reserva_duenio",['.$Dueño->getId_Dueño().']);');
 				}
                 
 		} catch (\Exception $e) {
@@ -212,7 +221,7 @@ public function eliminar_reserva($id)
 		{
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','reserva creada correctamente..');
 			$Mensaje_Alerta->imprimir();
-			$JS_EN_PHP->ejecutar('Procesar("tabla_reserva","reserva/listar_reserva_Dueño",['.$Dueño->getId_Dueño().']);');
+			$JS_EN_PHP->ejecutar('Procesar("tabla_reserva","reserva/listar_reserva_duenio",['.$Dueño->getId_Dueño().']);');
 			
 		}
 		else
@@ -253,12 +262,12 @@ public function lista_Reserva()
 		Funcion que se encarga retornar un arreglo con objetos de reserva		
 	===============================================================================
 */	
-public function listar_reserva_Dueño($obj)
+public function listar_reserva_duenio($obj)
 {	
 	try 
 	{
 		$Dueño = new \modelos\Usuario\Dueño($obj);
-		$Reserva = $this->ReservaDAO->listar_x_dueño($Dueño);
+		$Reservas = $this->ReservaDAO->listar_x_dueño($Dueño);
 		include('../vistas/reserva/reserva.php');
 			
 	} catch (\Exception $e) {
