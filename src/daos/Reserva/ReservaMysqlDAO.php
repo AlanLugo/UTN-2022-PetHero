@@ -11,9 +11,13 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
 {
     protected $tabla = 'reservas';
     protected $dbh;
+    private $MascotaDAO;
+    private $GuardianDAO;
     public function __construct()
     {
         $this->dbh = Conexion::getInstance();
+        $this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
+        $this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
     }
 
     public function getReserva_byID($id){}
@@ -152,8 +156,8 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
             $sql = "INSERT INTO " . $this->tabla . " (fecha_inicio,fecha_final,estado,id_mascota,id_dueño,id_guardian) VALUES (?,?,?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             //seguir aca 
-            $query->bindValue(1,$obj->getFechaInicio());
-            $query->bindValue(2,$obj->getFechaFinal());
+            $query->bindValue(1,$obj->getFecha_inicio());
+            $query->bindValue(2,$obj->getFecha_final());
             $query->bindValue(3,$obj->getEstado());
             $query->bindValue(4,$obj->getId_mascota()->getId_mascota());
             $query->bindValue(5,$obj->getId_dueño()->getId_dueño());
@@ -203,7 +207,9 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Reserva\Reserva');
 			$Reservas = NULL;
-			while ($row = $query->fetch()) {				
+			while ($row = $query->fetch()) {
+                $row->setId_Mascota($this->MascotaDAO->leer(new \modelos\Mascota\Mascota($row->getId_mascota())));			
+                $row->setId_Guardian($this->GuardianDAO->leer(new \modelos\Usuario\Guardian($row->getId_Guardian())));
 				$Reservas[] = $row;
 			}
 			return $Reservas;
@@ -214,6 +220,8 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
 			
 		}
 	}
+
+    
 
 }
 ?>

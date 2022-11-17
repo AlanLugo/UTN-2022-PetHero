@@ -11,11 +11,11 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 {
     protected $tabla = 'disponibilidades';
     protected $dbh;
-    private $GuadianDAO;
+    private $GuardianDAO;
     public function __construct()
     {
         $this->dbh = Conexion::getInstance();
-        $this->GuadianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
+        $this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
     }
 
     public function getDisponibilidad_byID($id){}
@@ -220,7 +220,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
 			$Disponibilidad = NULL;
 			while ($row = $query->fetch()) {
-                $row->setId_Guardian($this->GuadianDAO->leer(new \modelos\Usuario\Guardian($row->getId_Guardian())));				
+                $row->setId_Guardian($this->GuardianDAO->leer(new \modelos\Usuario\Guardian($row->getId_Guardian())));				
 				$Disponibilidad[] = $row;
 			}
             print_r($Disponibilidad);
@@ -267,7 +267,7 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
             $query->execute();
             $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
             $obj = $query->fetch();
-            $obj->setId_Guardian($this->GuadianDAO->leer(new \modelos\Usuario\Guardian($obj->getId_Guardian())));
+            $obj->setId_Guardian($this->GuardianDAO->leer(new \modelos\Usuario\Guardian($obj->getId_Guardian())));
             return $obj;
 
         }catch(PDOException $e){
