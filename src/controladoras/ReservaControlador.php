@@ -47,6 +47,28 @@ class ReservaControlador
             $Mensaje_Alerta->imprimir();
         }
     }
+	/*
+	===============================================================================
+				Funcion listar_reservas_x_guardian trae todos las Reserva
+				en un array de objetos tipo reserva y las muestra en una vista.
+	===============================================================================
+	*/
+    public function listar_reservas_x_guardian()
+    {
+        try
+        {
+            $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
+			$Guardian = unserialize($_SESSION['Guardian']);
+            $Reservas = $this->ReservaDAO->listar_x_guardian($Guardian);
+            include("../vistas/Reserva/reserva_guardian.php");
+        
+        }catch (\Exception $e){
+            $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+            $Mensaje_Alerta->imprimir();
+        }
+    }
+
+	
 /*
 	===============================================================================
 				Funcion modal_reserva_crear se encarga de mostrar el 

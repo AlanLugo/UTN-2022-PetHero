@@ -169,7 +169,7 @@ class LoginControlador
 							$Nueva_Cuenta = $this->crear_registro_cuenta($usuario, $password, $rol);
 							$Nueva_Dueño = $this->crear_registro_dueño($nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, $Nueva_Cuenta);
 
-							if($Nueva_Cuenta!=NULL)
+							if($Nueva_Dueño!=NULL)
 							{
 								$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Cuenta creada correctamente..');
 									$Mensaje_Alerta->imprimir();
@@ -190,7 +190,7 @@ class LoginControlador
 							$Nueva_Cuenta = $this->crear_registro_cuenta($usuario, $password, $rol);
 							$Nuevo_Guardian =$this->crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, true, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian, $Nueva_Cuenta);
 
-							if($Nueva_Cuenta!=NULL)
+							if($Nuevo_Guardian!=NULL)
 							{
 								$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Cuenta creada correctamente..');
 									$Mensaje_Alerta->imprimir();
@@ -232,22 +232,16 @@ class LoginControlador
 	{
 		try
 		{
-		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
-		$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
-		if(empty($usuario) Or empty($password) Or empty($rol))
+			$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
+			$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
+			if(empty($usuario) Or empty($password) Or empty($rol))
 			{
-				throw new \Exception("Campo/s vacio/s.");
-				exit();
+					throw new \Exception("Campo/s vacio/s.");
+					exit();
 			}
-		$Nueva_Cuenta = $this->CuentaDAO->crear($Nueva_Cuenta);
-				if($Nueva_Cuenta!=NULL)
-				{
-					$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Cuenta creada correctamente..');
-					$Mensaje_Alerta->imprimir();
-                        
-					$JS_EN_PHP->ejecutar('Procesar("tabla_cuenta","login/listar_cuenta",[]);');
-				}
-				return $Nueva_Cuenta;
+			$Nueva_Cuenta = $this->CuentaDAO->crear($Nueva_Cuenta);
+					
+			return $Nueva_Cuenta;
 		}catch (\Exception $e) {
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());
 			$Mensaje_Alerta->imprimir();
