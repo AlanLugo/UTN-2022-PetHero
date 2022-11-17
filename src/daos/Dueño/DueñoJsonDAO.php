@@ -1,9 +1,7 @@
 <?php
 namespace daos\Guardian;
 
-use daos\Dueño\IDueñoDAO;
 use modelos\Usuario\Dueño;
-use modelos\Usuario\Guardian;
 
 class DueñoJsonDAO implements IDueñoDAO
 {
@@ -33,7 +31,6 @@ class DueñoJsonDAO implements IDueñoDAO
                 $dueño->setDni($valueArray["dni"]);
                 $dueño->setDireccion($valueArray["direccion"]);
                 $dueño->setTelefono($valueArray["telefono"]);
-
                 $dueño->setId_Cuenta($valueArray["id_cuenta"]);
                 array_push($this->dueñoLista, $dueño);
 
@@ -50,7 +47,11 @@ class DueñoJsonDAO implements IDueñoDAO
 
         foreach($this->dueñoLista as $dueño) {
             $valuesArray["id_dueño"] = $dueño->getId_Dueño();
-            
+            $valuesArray["nombre"] = $dueño->getNombre();
+            $valuesArray["dni"] = $dueño->getDni();
+            $valuesArray["direccion"] = $dueño->getDireccion();
+            $valueArray["telefono"] = $dueño->getTelefono();
+            $valueArray["id_cuenta"] = $dueño->getId_Cuenta();
             array_push($arrayToDecode, $valuesArray);
         }
 
@@ -61,18 +62,43 @@ class DueñoJsonDAO implements IDueñoDAO
     public function getDueño_byID($id)
     {
         $this->TraerDatos();
-        $guardian = new Guardian();
-        foreach($this->guardianLista as $guardian){
-            if($guardian->getId_Guardian() == $id){
-                return $guardian;
+        $dueño = new Dueño();
+        foreach($this->dueñoLista as $dueño) {
+            if($dueño->getId_Dueño() == $id) {
+                return $dueño;
             }
         }
+        
     }
+
 	public function getDueño_byID_Cuenta($Cuenta){}
-	public function leer($obj){}
+
+	public function leer($obj)
+    {
+        $this->TraerDatos();
+        $dueño = new Dueño();
+        foreach($this->dueñoLista as $dueño) 
+        {
+            return $dueño;
+        }
+        return $dueño;
+    }
+
 	public function leer_x_apellido_nombre($obj){}
 	public function actualizar($id){}
 	public function borrar($id){}
-	public function crear($obj){}
-	public function listar(){}
+    
+	public function crear($obj)
+    {
+        $this->TraerDatos();
+        $obj->setId_Dueño($this->id + 1);
+        array_push($this->dueñoLista, $obj);
+        $this->GuardarDatos();
+    }
+
+	public function listar()
+    {
+        $this->TraerDatos();
+        return $this->dueñoLista;
+    }
 }
