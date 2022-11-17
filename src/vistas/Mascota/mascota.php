@@ -1,9 +1,4 @@
-<?php
-if($Mascotas==NULL)
-{
-    throw new \Exception("No hay registros almacenados...");   
-}
-?>
+
 
 <div class="row" id="tabla_mascota">
   <div class="col-md-8 col-md-offset-2">
@@ -13,6 +8,12 @@ if($Mascotas==NULL)
       </button>
     </div>
     <div id="tabla_mascota_body">
+    <?php
+      if($Mascotas==NULL)
+      {
+          throw new \Exception("No hay registros almacenados...");   
+      }
+      ?>
     <?php
     include("mascota_body.php");
     ?>

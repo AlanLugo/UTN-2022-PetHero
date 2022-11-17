@@ -43,7 +43,6 @@
 <div class="row">
 	<div class="col-md-12">
 	<div class="margin-bootom-sm" id="body-panel-guardian">
-	<?php print_r($Guardian); ?>
 		<script type="text/javascript">
 			Procesar('body-panel-guardian','disponibilidad/listar_disponibilidad_guardian',[<?php echo $Guardian->getId_Guardian();?>]);
 		</script>

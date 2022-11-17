@@ -1,12 +1,7 @@
-<div class="modal-dialog">
-    <!-- Modal content-->
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Buscar guardian disponibilidad por raza y tamaño</h4>
-    </div>
-    <div class="modal-body row">
-      <form class="col-xs-12">
+<div class="panel panel-default">
+      <div class="panel-heading"><h4>Buscar un guardian para reservar.. 
+      <div class="panel-body">
+        <div class="col-md-12">
         <div id="formulario_busqueda_guardian">
             <div class="form-group">
                 <label class="control-label">Raza</label>
@@ -40,12 +35,10 @@
       <button type="button" class="btn btn-success" aria-label="Right Align" onclick="Procesar('listar_disponibilidad','disponibilidad/listar_disponibilidad_guardian_raza_tamanio',[$('#busqueda_guardian_raza_dia').val(),$('#busqueda_guardian_tamaño_maximo').val()]);">Buscar
       </button>
 
-      </form>
-    </div>
-    
-    <div id="listar_disponibilidad">
-    
-    </div>
-  
-  </div>
-</div>
+        <div id="listar_disponibilidad">
+        </div>
+        </div>
+        </div>  
+      </div>  
+      </div>  
+</div>  

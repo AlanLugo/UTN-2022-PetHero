@@ -21,7 +21,7 @@
       <td class="col-md-4"><?php echo $Reserva->getId_guardian()->getNombre()?></td>
       <td class="col-md-4"><?php echo $Reserva->getId_guardian()->getPrecio()?></td>
       <td class="col-md-4"><?php echo $Reserva->getId_mascota()->getNombre()?></td>
-      <td class="col-md-4"><?php echo $Reserva->getEstado()?></td>
+      <td class="col-md-4"><?php echo $Reserva->getEstadoReservaStr()?></td>
       <td class="col-md-2">
         <button type="button" class="btn btn-default btn-sm"  aria-label="Left Align" data-toggle="modal" data-target="#modal_editar_reserva" onclick="Procesar('modal_editar_reserva','reserva/reserva_modificar',['<?php echo $Reserva->getId_reserva();?>']);return false;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
         </button> 

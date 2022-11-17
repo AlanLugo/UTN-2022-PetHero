@@ -133,4 +133,17 @@ class Reserva{
 		}
 
     }
+
+    public function getEstadoReservaStr(){
+        if($this->getEstado()==0){
+            return "Pendiente";
+        }else if($this->getEstado()==1){
+            return "Aceptada";
+        }else if($this->getEstado()==2){
+            return "Rechazada";
+        }else if($this->getEstado()==3){
+            return "Terminada";
+        }
+
+    }
 }
