@@ -82,6 +82,26 @@ CREATE TABLE reservas (
     FOREIGN KEY fk_reserva_id_guardian (id_guardian) REFERENCES guardianes(id_guardian)
 );
 
+CREATE TABLE tipos_mascota (
+	id_tipo_mascota int(11) NOT NULL AUTO_INCREMENT,
+    nombre varchar(32) NOT NULL,
+    PRIMARY KEY (id_tipo_mascota)
+);
+
+CREATE TABLE razas_mascota (
+	id_raza_mascota int(11) NOT NULL AUTO_INCREMENT,
+    nombre varchar(32) NOT NULL,
+    id_tipo_mascota int,
+    PRIMARY KEY (id_raza_mascota),
+    FOREIGN KEY fk_raza_id_tipo_mascota (id_tipo_mascota) REFERENCES tipos_mascota(id_tipo_mascota)
+);
+
+CREATE TABLE tamaños_maximo (
+	id_tamaño_maximo int(11) NOT NULL AUTO_INCREMENT,
+    nombre varchar(32) NOT NULL,
+    PRIMARY KEY (id_tamaño_maximo)
+);
+
 -- INSERT´S DATOS DEFAULT
 
 INSERT INTO pethero.cuentas
@@ -111,3 +131,54 @@ VALUES(2, 'Sally', 'Perro', 'Chico', 'Duerme todo el dia', 'https://encrypted-tb
 INSERT INTO pethero.disponibilidades
 (id_disponibilidad, fecha_inicio, fecha_final, disponible, id_guardian)
 VALUES(1, '2022-10-24 00:00:00', '2022-10-25 23:59:59', true, 1);
+
+-- INSERT´S DATOS MASCOTAS TIPO_MASCOTA
+
+INSERT INTO pethero.tipos_mascota
+(id_tipo_mascota, nombre)
+VALUES(1, "Perro");
+
+INSERT INTO pethero.tipos_mascota
+(id_tipo_mascota, nombre)
+VALUES(2, "Gato");
+
+-- INSERT´S DATOS MASCOTA RAZA_MASCOTAS
+
+INSERT INTO pethero.razas_mascota
+(id_raza_mascota, nombre, id_tipo_mascota)
+VALUES(1, "Caniche", 1);
+
+INSERT INTO pethero.razas_mascota
+(id_raza_mascota, nombre, id_tipo_mascota)
+VALUES(2, "Labrador", 1);
+
+INSERT INTO pethero.razas_mascota
+(id_raza_mascota, nombre, id_tipo_mascota)
+VALUES(3, "Pitbull", 1);
+
+
+INSERT INTO pethero.razas_mascota
+(id_raza_mascota, nombre, id_tipo_mascota)
+VALUES(4, "Siamés", 2);
+
+INSERT INTO pethero.razas_mascota
+(id_raza_mascota, nombre, id_tipo_mascota)
+VALUES(5, "Gato persa", 2);
+
+INSERT INTO pethero.razas_mascota
+(id_raza_mascota, nombre, id_tipo_mascota)
+VALUES(6, "Gato ragdoll", 2);
+
+-- INSERT´S DATOS MASCOTAS TAMAÑO
+
+INSERT INTO pethero.tamaños_maximo
+(id_tamaño_maximo, nombre)
+VALUES(1, "Chico");
+
+INSERT INTO pethero.tamaños_maximo
+(id_tamaño_maximo, nombre)
+VALUES(2, "Mediano");
+
+INSERT INTO pethero.tamaños_maximo
+(id_tamaño_maximo, nombre)
+VALUES(3, "Grande");

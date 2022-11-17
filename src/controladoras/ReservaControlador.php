@@ -185,7 +185,7 @@ public function modificar_reserva($id_reserva,$fechaInicio,$fechaFinal,$estado,$
 		$reserva = $this->ReservaDAO->actualizar($reserva);	
 		if($reserva!=NULL)
 		{
-			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','reserva creada correctamente..');
+			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','reserva modificada correctamente..');
 			$Mensaje_Alerta->imprimir();
 			$JS_EN_PHP->ejecutar('Procesar("tabla_reserva","reserva/listar_reserva_guardian",['.$Guardian->getId_Guardian().']);');
 				
@@ -278,7 +278,6 @@ public function listar_reserva_duenio($obj)
 	
 }
 
-
 /*
 	===============================================================================
 		Funcion que se encarga retornar un objeto de reserva, buscado por id		
@@ -297,6 +296,40 @@ public function leer_reserva($reserva)
 
 }
 
+/*
+	===============================================================================
+		Funcion que cambia el estado de una reserva		
+	===============================================================================
+*/	
+public function cambiar_estado_reserva($obj)
+{
+    try
+    {
+        $JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
+		$Guardian = unserialize($_SESSION['Guardian']);
+        $reserva = new \modelos\Reserva\Reserva();			
+		$reserva = $this->ReservaDAO->actualizar($reserva);	
+		if($reserva!=NULL)
+		{
+			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','reserva modificada correctamente..');
+			$Mensaje_Alerta->imprimir();
+			$JS_EN_PHP->ejecutar('Procesar("tabla_reserva","reserva/listar_reserva_guardian",['.$Guardian->getId_Guardian().']);');
+				
+		}
+		else
+		{
+			throw new \Exception("Error al modificar el articulo");
+				
+		}
+    } catch (\Exception $e) {
+            $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());
+              $Mensaje_Alerta->imprimir();
+    }
+    finally {
+            
+              $JS_EN_PHP->limpiar('footer_reserva_modificar','<button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>');
+      }
+}
 
 
 } 

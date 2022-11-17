@@ -12,11 +12,13 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
     protected $tabla = 'reservas';
     protected $dbh;
     private $MascotaDAO;
+    private $DueñoDAO;
     private $GuardianDAO;
     public function __construct()
     {
         $this->dbh = Conexion::getInstance();
         $this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
+        $this->DueñoDAO = \daos\Dueño\DueñoMysqlDAO::getInstance();
         $this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
     }
 
@@ -86,22 +88,6 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
                 throw new \Exception("Error ya existe un registro con el mismo nombre.");
                 exit();
             }
-            /* 
-                protected $id_reserva;
-                protected $fecha_inicio;
-                protected $fecha_final;
-                protected $horarios;
-                protected $estado;
-                protected $id_mascota;
-                protected $id_dueño;
-                protected $id_guardian;
-                $this->setId_Disponibilidad($id_disponibilidad);
-                $this->setFechaInicio($fechaInicio);
-                $this->setFechaFinal($fechaFinal);
-                $this->setDisponible($disponible);
-                $this->setId_Guardian($id_guardian);
-         
-            */
             $sql = "UPDATE " . $this->tabla . " SET fecha_inicio = ?, fecha_final = ?, horarios = ?, estado = ? WHERE id_reserva = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getFecha_inicio());
@@ -230,7 +216,9 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Reserva\Reserva');
 			$Reservas = NULL;
-			while ($row = $query->fetch()) {				
+			while ($row = $query->fetch()) {	
+                $row->setId_Mascota($this->MascotaDAO->leer(new \modelos\Mascota\Mascota($row->getId_mascota())));			
+                $row->setId_Dueño($this->DueñoDAO->leer(new \modelos\Usuario\Dueño($row->getId_Dueño())));			
 				$Reservas[] = $row;
 			}
 			return $Reservas;

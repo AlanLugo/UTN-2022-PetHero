@@ -18,6 +18,7 @@
                         <option>San Bernardo</option>
                         <option>Dogo Argentino</option>
                         <option>Bobtail</option>
+                        <option>Gato</option>
                     </select>    
             </div>
 
