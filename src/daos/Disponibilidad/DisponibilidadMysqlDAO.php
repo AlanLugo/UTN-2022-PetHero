@@ -223,7 +223,6 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
                 $row->setId_Guardian($this->GuadianDAO->leer(new \modelos\Usuario\Guardian($row->getId_Guardian())));				
 				$Disponibilidad[] = $row;
 			}
-            print_r($Disponibilidad);
 			return $Disponibilidad;
 			
 		}catch(PDOException $e){

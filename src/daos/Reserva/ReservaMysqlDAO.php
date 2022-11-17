@@ -215,5 +215,26 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
 		}
 	}
 
+    public function listar_x_guardian($obj)
+	{
+		try {
+			$sql = "SELECT * from ".$this->tabla." where id_guardian = ?";
+			$query = $this->dbh->prepare($sql);
+			$query->bindValue(1,$obj->getId_Guardian());
+			$query->execute();
+			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Reserva\Reserva');
+			$Reservas = NULL;
+			while ($row = $query->fetch()) {				
+				$Reservas[] = $row;
+			}
+			return $Reservas;
+			
+		}catch(PDOException $e){
+			
+			print "Error!: " . $e->getMessage();
+			
+		}
+	}
+
 }
 ?>
