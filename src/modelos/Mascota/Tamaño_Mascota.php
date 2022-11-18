@@ -4,18 +4,18 @@ namespace modelos\Mascota;
 
 class Tamaño_Mascota
 {
-    protected $id_tamaño_maximo;
+    protected $id_tamaño_mascota;
     protected $nombre;
 
-    public function __construct($id_tamaño_maximo = '', $nombre = '')
+    public function __construct($id_tamaño_mascota = '', $nombre = '')
     {
-        $this->setId_tamaño_maximo($id_tamaño_maximo);
+        $this->setId_tamaño_mascota($id_tamaño_mascota);
         $this->setNombre($nombre);
     }
 
-    public function getId_tamaño_maximo()
+    public function getId_tamaño_mascota()
     {
-        return $this->id_tamaño_maximo;
+        return $this->id_tamaño_mascota;
     }
 
     public function getNombre()
@@ -24,9 +24,9 @@ class Tamaño_Mascota
     }
 
 
-    public function setId_tamaño_maximo($id_tamaño_maximo)
+    public function setId_tamaño_mascota($id_tamaño_mascota)
     {
-        $this->id_tamaño_maximo = $id_tamaño_maximo;
+        $this->id_tamaño_mascota = $id_tamaño_mascota;
 
         return $this;
     }

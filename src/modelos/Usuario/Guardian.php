@@ -8,11 +8,11 @@ class Guardian
     protected $cuil;
     protected $disponibilidad;
     protected $precio;
-    protected $tamaño_maximo;
-    protected $raza_dia;
+    protected $id_tipo_mascota;
+    protected $id_tamaño_mascota;
     protected $id_cuenta;
 
-    public function __construct($id_guardian = '', $nombre = '', $direccion = '', $cuil = '', $disponibilidad = '', $precio = '',$tamaño_maximo = '',$raza_dia = '', \modelos\Usuario\Cuenta $id_cuenta = NULL)
+    public function __construct($id_guardian = '', $nombre = '', $direccion = '', $cuil = '', $disponibilidad = '', $precio = '', \modelos\Mascota\Tipo_Mascota $id_tipo_mascota = NULL, \modelos\Mascota\Tamaño_Mascota $id_tamaño_mascota = NULL, \modelos\Usuario\Cuenta $id_cuenta = NULL)
     {
         $this->setId_Guardian($id_guardian);
         $this->setNombre($nombre);
@@ -20,8 +20,8 @@ class Guardian
         $this->setCuil($cuil);
         $this->setDisponibilidad($disponibilidad);
         $this->setPrecio($precio);
-        $this->set_tamaño_maximo($tamaño_maximo);
-        $this->set_raza_dia($raza_dia);
+        $this->setId_tipo_mascota($id_tipo_mascota);
+        $this->setId_tamaño_mascota($id_tamaño_mascota);
         $this->setId_Cuenta($id_cuenta);
     }
      
@@ -29,7 +29,6 @@ class Guardian
     {
         return $this->id_guardian;
     }
-
 
     public function getNombre()
     {
@@ -56,14 +55,14 @@ class Guardian
         return $this->precio;
     }
 
-    public function get_tamaño_maximo()
+    public function getId_tipo_mascota()
     {
-        return $this->tamaño_maximo;
+        return $this->id_tipo_mascota;
     }
 
-    public function get_raza_dia()
+    public function getId_tamaño_mascota()
     {
-        return $this->raza_dia;
+        return $this->id_tamaño_mascota;
     }
 
     public function getId_Cuenta()
@@ -106,18 +105,28 @@ class Guardian
         return $this;
     }
 
-    public function set_tamaño_maximo($tamaño_maximo)
+    public function setId_tipo_mascota($id_tipo_mascota)
     {
-        $this->tamaño_maximo = $tamaño_maximo;
-
-        return $this;
+        if(is_a($id_tipo_mascota,'\modelos\Mascota\Tipo_Mascota'))
+		{
+			$this->id_tipo_mascota = $id_tipo_mascota;
+		}
+		else
+		{
+			$this->id_tipo_mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota);
+		}
     }
 
-    public function set_raza_dia($raza_dia)
+    public function setId_tamaño_mascota($id_tamaño_mascota)
     {
-        $this->raza_dia = $raza_dia;
-
-        return $this;
+        if(is_a($id_tamaño_mascota,'\modelos\Mascota\Tamaño_Mascota'))
+		{
+			$this->id_tamaño_mascota = $id_tamaño_mascota;
+		}
+		else
+		{
+			$this->id_tamaño_mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota);
+		}
     }
 
     public function setId_Cuenta($id_cuenta)

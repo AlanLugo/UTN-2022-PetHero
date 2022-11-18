@@ -10,9 +10,9 @@ class MascotaControlador
     function __construct()
     {
         $this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
-		$this->TipoMascotaDAO = \daos\Mascota\TipoMysqlDAO::getInstance();
-		$this->RazaMascotaDAO = \daos\Mascota\RazaMysqlDAO::getInstance();
-		$this->TamañoMascotaDAO = \daos\Mascota\TamañoMysqlDAO::getInstance();
+		$this->TipoMascotaDAO = \daos\Mascota\TipoMascotaMysqlDAO::getInstance();
+		$this->RazaMascotaDAO = \daos\Mascota\RazaMascotaMysqlDAO::getInstance();
+		$this->TamañoMascotaDAO = \daos\Mascota\TamañoMascotaMysqlDAO::getInstance(); 
     }
 
 /*
@@ -53,9 +53,10 @@ class MascotaControlador
 */	
     public function modal_mascota_crear()
 	{		
-		
+			$Tipos_Mascota = $this->TipoMascotaDAO->listar();
+			$Razas_Mascota = $this->RazaMascotaDAO->listar();
+			$Tamaños_Mascota = $this->TamañoMascotaDAO->listar();
 			include("../vistas/Mascota/Modal/mascota_crear.php");	
-		
 	}
 
 /*
@@ -101,23 +102,19 @@ class MascotaControlador
 				Funcion alta_mascota se encarga de dar de alta una mascota en
 				el sistema.
 	===============================================================================
-	 protected $id_mascota;
-    protected $nombre;
-    protected $raza;
-    protected $tamaño;
-    protected $observaciones;
-    protected $imagen;
 */	
-	public function alta_mascota($nombre, $raza, $tamaño, $observaciones, $archivo='')
+	public function alta_mascota($nombre, $observaciones, $id_tipo_mascota, $id_raza_mascota, $id_tamaño_mascota, $archivo='')
 	{		
 		
 		try
 		{		
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 				$Dueño = unserialize($_SESSION['Dueño']);
-							
-				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$raza,$tamaño,$observaciones,'',$Dueño);
-				if(empty($Nueva_Mascota->getRaza()) Or empty($Nueva_Mascota->getTamaño()))
+				$Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
+				$Raza_Mascota = new \modelos\Mascota\Raza_Mascota($id_raza_mascota,'',$Tipo_Mascota);
+				$Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota);
+				$Nueva_Mascota = new \modelos\Mascota\Mascota('',$nombre,$observaciones,$Tipo_Mascota,$Raza_Mascota,$Tamaño_Mascota,'',$Dueño);
+				if(empty($Nueva_Mascota->getNombre()) Or empty($Nueva_Mascota->getObservaciones()) Or empty($Nueva_Mascota->getImagen()))
 				{
 					throw new \Exception("Campo/s vacio/s.");
 					exit();		
@@ -148,13 +145,13 @@ class MascotaControlador
 				de mascota			
 	===============================================================================
 */	
-public function modificar_mascota($id_mascota,$nombre,$raza,$tamaño,$observaciones,$archivo='')
+public function modificar_mascota($id_mascota,$nombre,$observaciones,$id_tipo_mascota,$id_raza_mascota,$id_tamaño_mascota,$archivo='')
 {
     try
     {
         $JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 		$Dueño = unserialize($_SESSION['Dueño']);
-        $Mascota = new \modelos\Mascota\Mascota($id_mascota,$nombre,$raza,$tamaño,$observaciones,'',$Dueño);			
+        $Mascota = new \modelos\Mascota\Mascota($id_mascota,$nombre,$observaciones,$id_tipo_mascota,$id_raza_mascota,$id_tamaño_mascota,'',$Dueño);			
         $Anterior_Mascota = $this->MascotaDAO->leer($Mascota);
         $Mascota->setImagen($Anterior_Mascota->getImagen());
         $Mascota = $this->MascotaDAO->actualizar($Mascota);
@@ -234,11 +231,11 @@ public function subir_imagen($utilidad,$obj,$archivo)
 		}
 		switch ($utilidad) {
 				case 'crear':
-				$id_input = 5;
+				$id_input = 6;
 				break;
 
 				case 'modificar':
-				$id_input = 6;
+				$id_input = 7;
 				break;
 			
 		}
@@ -352,58 +349,7 @@ public function lista_mascotas()
 	}	
 
 	
-}
-/*
-	===============================================================================
-		Funcion que se encarga retornar un arreglo con objetos de tipo mascota	
-	===============================================================================
-*/	
-public function lista_tipo_mascotas()
-{	
-	try 
-	{
-		$TiposMascota = $this->TipoMascotaDAO->listar();
-		include("../vistas/Reserva/reserva.php");	
-			
-	} catch (\Exception $e) {
-		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
-		  $Mensaje_Alerta->imprimir();  			
-	}	
-}
-/*
-	===============================================================================
-		Funcion que se encarga retornar un arreglo con objetos de tipo mascota	
-	===============================================================================
-*/	
-public function lista_raza_mascotas()
-{	
-	try 
-	{
-		$RazasMascota = $this->RazaMascotaDAO->listar();;
-		include("../vistas/Reserva/reserva.php");		
-			
-	} catch (\Exception $e) {
-		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
-		  $Mensaje_Alerta->imprimir();  			
-	}	
-}
-/*
-	===============================================================================
-		Funcion que se encarga retornar un arreglo con objetos de tipo mascota	
-	===============================================================================
-*/	
-public function lista_tamaño_mascotas()
-{	
-	try 
-	{
-		$TamañosMascota = $this->TamañoMascotaDAO->listar();
-		include("../vistas/Reserva/reserva.php");		
-			
-	} catch (\Exception $e) {
-		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
-		  $Mensaje_Alerta->imprimir();  			
-	}	
-}
+}	
 /*
 	===============================================================================
 		Funcion que se encarga retornar un arreglo con objetos de mascota		

@@ -5,7 +5,12 @@ namespace controladoras;
  */
 class ReservaControlador
 {
+    private $DueñoDAO;
+    private $GuardianDAO;
     private $ReservaDAO;
+    private $DisponibilidadDAO;
+    private $MascotaDAO;
+	private $TamañoMascotaDAO;
 
     function __construct()
     {
@@ -14,6 +19,8 @@ class ReservaControlador
         $this->ReservaDAO = \daos\Reserva\ReservaMysqlDAO::getInstance();
 		$this->DisponibilidadDAO = \daos\Disponibilidad\DisponibilidadMysqlDAO::getInstance();
 		$this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
+		$this->TamañoMascotaDAO = \daos\Mascota\TamañoMascotaMysqlDAO::getInstance();
+
     }
 
 /*
@@ -40,6 +47,8 @@ class ReservaControlador
 			$Dueño = unserialize($_SESSION['Dueño']);
             $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
             $Reservas = $this->ReservaDAO->listar_x_dueño($Dueño);
+			$Tipos_Mascota_Dueño_Filtro = $this->MascotaDAO->listar_tipo_mascota_dueño_x_carga_existente($Dueño);
+			$Tamaños_Mascota_Dueño_Filtro = $this->TamañoMascotaDAO->listar();
             include("../vistas/Reserva/reserva.php");
         
         }catch (\Exception $e){

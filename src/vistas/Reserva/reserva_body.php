@@ -3,36 +3,33 @@
       <div class="panel-body">
         <div class="col-md-12">
         <div id="formulario_busqueda_guardian">
-            <div class="form-group">
-                <label class="control-label">Raza</label>
-                    <select class="form-control" id="busqueda_guardian_raza_dia" placeholder="Ingrese una raza a buscar" required>
-                        <option>Vacio</option>
-                        <option>Caniche</option>
-                        <option>Chihuahua</option>
-                        <option>Bulldog</option>
-                        <option>Yorkshire</option>
-                        <option>Labrador</option>
-                        <option>Boxer</option>
-                        <option>Husky</option>
-                        <option>Pitbull</option>
-                        <option>San Bernardo</option>
-                        <option>Dogo Argentino</option>
-                        <option>Bobtail</option>
-                        <option>Gato</option>
-                    </select>    
-            </div>
-
-            <div class="form-group">
-                <label class="control-label">Tamaño</label>
-                    <select class="form-control" id="busqueda_guardian_tamaño_maximo" placeholder="Ingrese un tamaño maximo a buscar" required>
-                        <option>Vacio</option>
-                        <option>Chico</option>
-                        <option>Mediano</option>
-                        <option>Grande</option>
-                    </select>    
-            </div>
+            
+        <div class="form-group">
+            <label class="control-label">Tipo de mascota</label>
+                <select class="form-control" id="alta_reserva_mascota_tipo" required>    
+                    <?php
+                      foreach($Tipos_Mascota_Dueño_Filtro as $Tipo){
+                    ?>
+                        <option value="<?php echo $Tipo->getId_tipo_mascota();?>"><?php echo $Tipo->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                </select>    
         </div>
 
+        <div class="form-group">
+            <label class="control-label">Tamaño</label>
+                <select class="form-control" id="alta_reserva_mascota_tipo" required>    
+                    <?php
+                      foreach($Tamaños_Mascota_Dueño_Filtro as $Tamaño){
+                    ?>
+                        <option value="<?php echo $Tamaño->getId_tamaño_mascota();?>"><?php echo $Tamaño->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                </select>    
+        </div>
+        
       <button type="button" class="btn btn-success" aria-label="Right Align" onclick="Procesar('listar_disponibilidad','disponibilidad/listar_disponibilidad_guardian_raza_tamanio',[$('#busqueda_guardian_raza_dia').val(),$('#busqueda_guardian_tamaño_maximo').val()]);">Buscar
       </button>
 

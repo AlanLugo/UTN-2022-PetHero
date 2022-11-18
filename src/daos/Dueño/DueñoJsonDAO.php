@@ -1,7 +1,10 @@
 <?php
-namespace daos\Guardian;
-
+namespace daos\Dueño;
+use daos\SingletoneAbstractDAO as SingletoneAbstractDAO;
+use daos\Conexion as Conexion;
+use PDOException;
 use modelos\Usuario\Dueño;
+
 
 class DueñoJsonDAO implements IDueñoDAO
 {

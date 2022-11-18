@@ -1,4 +1,9 @@
 
+<?php
+use modelos\Mascota\Tipo_Mascota;
+use modelos\Mascota\Raza_Mascota;
+use modelos\Mascota\Tamaño_Mascota;
+?>
 
 <div class="row" id="tabla_mascota">
   <div class="col-md-8 col-md-offset-2">
@@ -12,7 +17,7 @@
       if($Mascotas==NULL)
       {
           throw new \Exception("No hay registros almacenados...");   
-      }
+      }      
       ?>
     <?php
     include("mascota_body.php");
