@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <label class="control-label">Tamaño</label>
-                <select class="form-control" id="alta_reserva_mascota_tipo" required>    
+                <select class="form-control" id="alta_reserva_mascota_tamaño" required>    
                     <?php
                       foreach($Tamaños_Mascota_Dueño_Filtro as $Tamaño){
                     ?>
@@ -30,7 +30,7 @@
                 </select>    
         </div>
         
-      <button type="button" class="btn btn-success" aria-label="Right Align" onclick="Procesar('listar_disponibilidad','disponibilidad/listar_disponibilidad_guardian_raza_tamanio',[$('#busqueda_guardian_raza_dia').val(),$('#busqueda_guardian_tamaño_maximo').val()]);">Buscar
+      <button type="button" class="btn btn-success" aria-label="Right Align" onclick="Procesar('listar_disponibilidad','disponibilidad/listar_disponibilidad_guardian_raza_tamanio',[$('#alta_reserva_mascota_tipo').val(),$('#alta_reserva_mascota_tamaño').val()]);">Buscar
       </button>
 
         <div id="listar_disponibilidad">

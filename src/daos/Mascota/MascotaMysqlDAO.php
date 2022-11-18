@@ -254,13 +254,14 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 		}
 	}
 
-    public function listar_x_dueño_tamaño_raza($id_dueño, $tamaño, $raza)
+    public function listar_x_dueño_tamaño_raza($id_dueño, $id_tipo_mascota, $id_tamaño_mascota)
 	{
 		try {
-			$sql = "SELECT id_mascota, nombre, observaciones, imagen, id_tipo_mascota, id_raza_mascota, id_tamaño_mascota, id_dueño FROM ".$this->tabla." WHERE id_dueño = ? AND tamaño = ? AND raza = ?";
+			$sql = "SELECT id_mascota, nombre, observaciones, imagen, id_tipo_mascota, id_raza_mascota, id_tamaño_mascota, id_dueño FROM ".$this->tabla." WHERE id_dueño = ? AND id_tipo_mascota = ? AND id_tamaño_mascota = ?";
 			$query = $this->dbh->prepare($sql);
 			$query->bindValue(1,$id_dueño);
-            //insertar tipo / raza / tamaño
+			$query->bindValue(2,$id_tipo_mascota);
+			$query->bindValue(3,$id_tamaño_mascota);
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
 			$Mascotas = NULL;

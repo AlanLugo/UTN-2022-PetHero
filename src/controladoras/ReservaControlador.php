@@ -87,9 +87,9 @@ class ReservaControlador
     public function modal_reserva_crear($id)
 	{		
 			$Dueño = unserialize($_SESSION['Dueño']);
-			$Disponibilidad_id = new \modelos\Disponibilidad\Disponibilidad($id);
-			$Disponibilidad = $this->DisponibilidadDAO->buscar_x_id_disponibilidad($Disponibilidad_id);
-			$Mascotas = $this->MascotaDAO->listar_x_dueño_tamaño_raza($Dueño->getId_Dueño(), $Disponibilidad->getId_Guardian()->get_tamaño_maximo(), $Disponibilidad->getId_Guardian()->get_raza_dia());
+			$Seleccion_Disponibilidad = new \modelos\Disponibilidad\Disponibilidad($id);
+			$Disponibilidad = $this->DisponibilidadDAO->buscar_x_id_disponibilidad($Seleccion_Disponibilidad);
+			$Mascotas = $this->MascotaDAO->listar_x_dueño_tamaño_raza($Dueño->getId_Dueño(), $Disponibilidad->getId_Guardian()->getId_tipo_mascota(), $Disponibilidad->getId_Guardian()->getId_tamaño_mascota());
 			include("../vistas/Reserva/Modal/reserva_crear.php");	
 		
 	}
@@ -144,7 +144,6 @@ class ReservaControlador
 		
 		try
 		{		
-				print_r ("Este es mi id mascota: ".$id_mascota);
 				$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();					
 				$Dueño = unserialize($_SESSION['Dueño']);
 

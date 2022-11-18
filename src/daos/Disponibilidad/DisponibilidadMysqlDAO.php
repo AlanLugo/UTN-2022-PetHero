@@ -104,19 +104,6 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
                 throw new \Exception("Error ya existe un registro con el mismo nombre.");
                 exit();
             }
-            /* 
-                protected $fechaInicio;
-                protected $fechaFinal;
-                protected $disponible;
-                protected $id_guardian;
-
-                $this->setId_Disponibilidad($id_disponibilidad);
-                $this->setFechaInicio($fechaInicio);
-                $this->setFechaFinal($fechaFinal);
-                $this->setDisponible($disponible);
-                $this->setId_Guardian($id_guardian);
-         
-            */
             $sql = "UPDATE " . $this->tabla . " SET fecha_inicio = ?, fecha_final = ?, disponible = ? WHERE id_disponibilidad = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getFechaInicio());
@@ -237,10 +224,10 @@ class DisponibilidadMysqlDAO extends SingletoneAbstractDAO implements IDisponibi
 
 
 		try {
-			$sql = "SELECT id_disponibilidad,fecha_inicio,fecha_final,disponible,disponibilidades.id_guardian as id_guardian from ".$this->tabla." INNER JOIN guardianes ON disponibilidades.id_guardian = guardianes.id_guardian WHERE tamaño_maximo = ? AND raza_dia = ?";
+			$sql = "SELECT id_disponibilidad,fecha_inicio,fecha_final,disponible,disponibilidades.id_guardian as id_guardian from ".$this->tabla." INNER JOIN guardianes ON disponibilidades.id_guardian = guardianes.id_guardian WHERE id_tipo_mascota = ? AND id_tamaño_mascota = ?";
 			$query = $this->dbh->prepare($sql);
-			$query->bindValue(1,$obj->get_tamaño_maximo());
-			$query->bindValue(2,$obj->get_raza_dia());
+			$query->bindValue(1,$obj->getId_tipo_mascota()->getId_tipo_mascota());
+			$query->bindValue(2,$obj->getId_tamaño_mascota()->getId_tamaño_mascota());
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Disponibilidad\Disponibilidad');
 			$Disponibilidad = NULL;
