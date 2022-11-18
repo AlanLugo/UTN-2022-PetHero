@@ -2,11 +2,12 @@
 <table class="table table-hover">
   <thead class="row">
     <tr>            
-      <th class="col-md-3">Fecha Inicio</th>
-      <th class="col-md-3">Fecha Final</th>
-      <th class="col-md-2">Mascota</th>
-      <th class="col-md-2">Dueño</th>
-      <th class="col-md-4">Acciones</th>
+      <th class="col-md-1">Fecha Inicio</th>
+      <th class="col-md-1">Fecha Final</th>
+      <th class="col-md-1">Mascota</th>
+      <th class="col-md-1">Dueño</th>
+      <th class="col-md-2">Telefono</th>
+      <th class="col-md-6">Acciones</th>
     </tr>
   </thead>
   <tbody class="row">
@@ -16,8 +17,9 @@
     <tr>
       <td class="col-md-3"><?php echo $Reserva->getFecha_inicio()?></td>
       <td class="col-md-3"><?php echo $Reserva->getFecha_final()?></td>
-      <td class="col-md-2">Algo</td>
-      <td class="col-md-2">Algo</td>
+      <td class="col-md-2"><?php echo $Reserva->getId_mascota()->getNombre()?></td>
+      <td class="col-md-2"><?php echo $Reserva->getId_Dueño()->getNombre()?></td>
+      <td class="col-md-2"><?php echo $Reserva->getId_Dueño()->getTelefono()?></td>
       <td class="col-md-4">
         <!-- 0 Pendiente - 1 Aceptada - 2 Rechazada-->
         <?php

@@ -10,6 +10,9 @@ class MascotaControlador
     function __construct()
     {
         $this->MascotaDAO = \daos\Mascota\MascotaMysqlDAO::getInstance();
+		$this->TipoMascotaDAO = \daos\Mascota\TipoMysqlDAO::getInstance();
+		$this->RazaMascotaDAO = \daos\Mascota\RazaMysqlDAO::getInstance();
+		$this->TamañoMascotaDAO = \daos\Mascota\TamañoMysqlDAO::getInstance();
     }
 
 /*
@@ -349,6 +352,57 @@ public function lista_mascotas()
 	}	
 
 	
+}
+/*
+	===============================================================================
+		Funcion que se encarga retornar un arreglo con objetos de tipo mascota	
+	===============================================================================
+*/	
+public function lista_tipo_mascotas()
+{	
+	try 
+	{
+		$TiposMascota = $this->TipoMascotaDAO->listar();
+		include("../vistas/Reserva/reserva.php");	
+			
+	} catch (\Exception $e) {
+		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+		  $Mensaje_Alerta->imprimir();  			
+	}	
+}
+/*
+	===============================================================================
+		Funcion que se encarga retornar un arreglo con objetos de tipo mascota	
+	===============================================================================
+*/	
+public function lista_raza_mascotas()
+{	
+	try 
+	{
+		$RazasMascota = $this->RazaMascotaDAO->listar();;
+		include("../vistas/Reserva/reserva.php");		
+			
+	} catch (\Exception $e) {
+		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+		  $Mensaje_Alerta->imprimir();  			
+	}	
+}
+/*
+	===============================================================================
+		Funcion que se encarga retornar un arreglo con objetos de tipo mascota	
+	===============================================================================
+*/	
+public function lista_tamaño_mascotas()
+{	
+	try 
+	{
+		$TamañosMascota = $this->TamañoMascotaDAO->listar();
+		include("../vistas/Reserva/reserva.php");		
+			
+	} catch (\Exception $e) {
+		$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+		  $Mensaje_Alerta->imprimir();  			
+	}	
 }
 /*
 	===============================================================================
