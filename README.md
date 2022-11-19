@@ -36,6 +36,10 @@ Luego el **Dueño**, una vez **Aceptada** la **Reserva** con su **Disponibilidad
 
 El proyecto cuento inicialmente con unas estructuras **GuardianJsonDAO** y **DueñoJsonDAO**, pero luego con la migracion a PDO no se continuo con el desarrollo. Tambien debido a que el proyecto tuvo algunos contratiempos, no se opto por seguir con el desarrollo.
 
+
+
 ## Vistas
+
+
 
 Las vistas del proyecto comienzan desde **vistas/index.php**, luego **vistas/Login** y **vistas/Registros** nos permiten ingresar o registrar una cuenta-Dueño/Guardian. En el caso que nos **Registremos**, nos pedirá ingresar los datos de la **Cuenta** y nos dará a elegir entre ser un **Dueño** o un **Guardian**. Una vez creada la cuenta, ingresaremos los datos de **Usuario** y **Password** para acceder a la aplicación. Como **Dueño** podremos acceder a **vistas/Mascotas**, podremos crear reservas en **vistas\Reserva**
