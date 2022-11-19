@@ -30,12 +30,12 @@ Luego el **Dueño**, una vez **Aceptada** la **Reserva** con su **Disponibilidad
 
   
 
-## Primera parte, aplicacion con Json
+## Primera parte, aplicación con Json
 
   
 
-El proyecto cuento inicialmente con unas estructuras **GuardianJsonDAO** y **DueñoJsonDAO**, pero luego con la migracion a PDO no se continuo con el desarrollo. Tambien debido a que el proyecto tuvo algunos contratiempos, no se opto por seguir con el desarrollo.
+El proyecto conto inicialmente con unas estructuras **GuardianJsonDAO** y **DueñoJsonDAO**, pero luego con la migración a PDO no se continuo con el desarrollo. También debido  que el proyecto tuvo algunos contratiempos, no se opto por seguir con el desarrollo.
 
-## Vistas
+## Repaso por las Vistas
 
-Las vistas del proyecto comienzan desde **vistas/index.php**, luego **vistas/Login** y **vistas/Registros** nos permiten ingresar o registrar una cuenta-Dueño/Guardian. En el caso que nos **Registremos**, nos pedirá ingresar los datos de la **Cuenta** y nos dará a elegir entre ser un **Dueño** o un **Guardian**. Una vez creada la cuenta, ingresaremos los datos de **Usuario** y **Password** para acceder a la aplicación. Como **Dueño** podremos acceder a **vistas/Mascotas**, podremos crear reservas en **vistas\Reserva**
+Las vistas del proyecto comienzan desde **vistas/index.php**, luego **vistas/Login** y **vistas/Registros** nos permiten ingresar o registrar una cuenta-Dueño/Guardian. En el caso que nos **Registremos**, nos pedirá ingresar los datos de la **Cuenta** y nos dará a elegir entre ser un **Dueño** o un **Guardian**. Una vez creada la cuenta, ingresaremos los datos de **Usuario** y **Password** para acceder a la aplicación. Como **Dueño** podremos acceder a **vistas/Mascotas** y  podremos crear reservas en **vistas\Reserva**. Podremos gestionar nuestras **Mascotas** para luego encontrar una **Reserva**. Luego tenemos al **Guardian**, donde accederemos a **vistas\Disponibilidad**, desde aquí el Guardian podrá administrar su Disponibilidad. Luego contamos desde la vista de **vistas\Reserva** las solicitudes o reservas del guardián, que son esencialmente las reservas generadas por el **Dueño**. Desde aquí el Guardian decide si aceptarlas o rechazarlas. Por ultimo, el **Guardian** cuenta con una pestaña en **vistas\Guardian** para poder modificar su perfil. Para poder modificar su perfil tiene que **Aceptar y Terminar** las reservas activas o **Rechazarlas** por motivos de cambio de **Tipo de mascota**. El Guardian no puede cuidar **Perros y Gatos** al mismo tiempo, entonces este sistema omite la **Edición del Perfil** para que no ocurran incidentes.
