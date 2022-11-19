@@ -30,7 +30,7 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
         try{
             $sql = "SELECT * from ".$this->tabla." WHERE id_reserva= ?";
             $query = $this->dbh->prepare($sql);
-            $query->bindValue(1,$obj->getId_reseva());
+            $query->bindValue(1,$obj->getId_reserva());
             $query->execute();
             $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Reserva\Reserva');
             $obj = $query->fetch();
@@ -88,7 +88,7 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
                 throw new \Exception("Error ya existe un registro con el mismo nombre.");
                 exit();
             }
-            $sql = "UPDATE " . $this->tabla . " SET fecha_inicio = ?, fecha_final = ?, horarios = ?, estado = ? WHERE id_reserva = ?";
+            $sql = "UPDATE " . $this->tabla . " SET fecha_inicio = ?, fecha_final = ?, estado = ? WHERE id_reserva = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getFecha_inicio());
             $query->bindValue(2,$obj->getFecha_final());
@@ -210,9 +210,10 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
     public function listar_x_guardian($obj)
 	{
 		try {
-			$sql = "SELECT * from ".$this->tabla." where id_guardian = ?";
-			$query = $this->dbh->prepare($sql);
-			$query->bindValue(1,$obj->getId_Guardian());
+			$sql = "SELECT * from ".$this->tabla." INNER JOIN mascotas ON reservas.id_mascota = mascotas.id_mascota AND mascotas.id_tipo_mascota = ? where id_guardian = ?";
+			$query = $this->dbh->prepare($sql);            
+            $query->bindValue(1,$obj->getId_tipo_mascota());
+			$query->bindValue(2,$obj->getId_Guardian());
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Reserva\Reserva');
 			$Reservas = NULL;

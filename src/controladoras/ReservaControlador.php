@@ -77,6 +77,32 @@ class ReservaControlador
         }
     }
 
+
+	/*
+	===============================================================================
+				Funcion acciones_reserva actualiza el estado de la reserva
+				en un array de objetos tipo reserva y las muestra en una vista.
+	===============================================================================
+	*/
+    public function acciones_reserva($id_reserva, $id_accion)
+    {
+        try
+        {
+            $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
+			$Guardian = unserialize($_SESSION['Guardian']);
+			$Reserva = $this->ReservaDAO->leer(new \modelos\Reserva\Reserva($id_reserva));
+			$Reserva->setEstado($id_accion);
+			$this->ReservaDAO->actualizar($Reserva);
+			$this->ReservaDAO->listar_x_guardian($Guardian);
+            $Reservas = $this->ReservaDAO->listar_x_guardian($Guardian);
+            include("../vistas/Reserva/reserva_guardian_body.php");
+        
+        }catch (\Exception $e){
+            $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('warning',$e->getMessage());
+            $Mensaje_Alerta->imprimir();
+        }
+    }
+	
 	
 /*
 	===============================================================================

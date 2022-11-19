@@ -51,6 +51,9 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
             $query->execute();
             $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
             $obj = $query->fetch();
+            $obj->setId_tipo_mascota($this->TipoMascotaDAO->leer(new \modelos\Mascota\Tipo_Mascota($obj->getId_tipo_mascota())));
+            $obj->setId_raza_mascota($this->RazaMascotaDAO->leer(new \modelos\Mascota\Raza_Mascota($obj->getId_raza_mascota())));
+            $obj->setId_tamaño_mascota($this->TamañoMascotaDAO->leer(new \modelos\Mascota\Tamaño_Mascota($obj->getId_tamaño_mascota())));
             return $obj;
 
         }catch(PDOException $e){
@@ -289,7 +292,6 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 			while ($row = $query->fetch()) {				
 				$Mascotas[] = $row;
 			}
-            print_r($Mascotas);
 			return $Mascotas;
 			
 		}catch(PDOException $e){
