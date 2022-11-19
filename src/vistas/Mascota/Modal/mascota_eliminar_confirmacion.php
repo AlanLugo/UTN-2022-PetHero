@@ -12,7 +12,7 @@
 
       </div>
       <div id="EnviarConsulta_ModalBody" align="center" ></div>
-      <div class="modal-footer" id="footer_disponibilidad_confirmacion">
+      <div class="modal-footer" id="footer_mascota_confirmacion">
         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-success" onclick="Procesar('modal-body-conf-consulta','mascota/eliminar_mascota',['<?php echo $Mascota->getId_Mascota();?>',]);">Si</button>
       </div>

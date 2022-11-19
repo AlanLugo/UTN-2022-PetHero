@@ -15,15 +15,42 @@
             </div>
             
             <div class="form-group">
-                <label class="control-label"
-                for="inputEmail3">Raza</label>
-                <input class="form-control" id="modificar_mascota_raza" placeholder="Ingrese una raza" type="text" value="<?php $Mascota->getRaza();?>">
+              <label class="control-label">Tipo de mascota</label>
+                  <select class="form-control" id="modificar_mascota_tipo" required>    
+                    <?php
+                      foreach($Tipos_Mascota as $Tipo){
+                    ?>
+                        <option value="<?php echo $Tipo->getId_tipo_mascota();?>"><?php echo $Tipo->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
             </div>
 
             <div class="form-group">
-                <label class="control-label"
-                for="inputEmail3">Tamaño</label>
-                <input class="form-control" id="modificar_mascota_tamaño" placeholder="Ingrese un tamaño" type="text" value="<?php echo $Mascota->getTamaño();?>">
+              <label class="control-label">Raza</label>
+                  <select class="form-control" id="modificar_mascota_raza" required>    
+                    <?php
+                      foreach($Razas_Mascota as $Raza){
+                    ?>
+                        <option value="<?php echo $Raza->getId_raza_mascota();?>"><?php echo $Raza->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Tamaño</label>
+                  <select class="form-control" id="modificar_mascota_tamaño" required>    
+                    <?php
+                      foreach($Tamaños_Mascota as $Tamaño){
+                    ?>
+                        <option value="<?php echo $Tamaño->getId_tamaño_mascota();?>"><?php echo $Tamaño->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
             </div>
 
         <div class="form-group">
@@ -53,8 +80,8 @@
       </form>
     </div>
     <div class="modal-footer" id="footer_mascota_modificar">
-    <!--TERMINAR EL PROCESAR DE MODIFICACION MASCOTA -->
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_modificar_mascota','mascota/modificar_mascota',['<?php echo $Mascota->getId_Mascota();?>',$('#modificar_mascota_nombre').val(),$('#modificar_mascota_raza').val(),$('#modificar_mascota_tamaño').val(),$('#modificar_mascota_observacion').val(),$('#imagen-mascota').prop('files')[0]]);">Modificar</button>
+
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_modificar_mascota','mascota/modificar_mascota',['<?php echo $Mascota->getId_Mascota();?>',$('#modificar_mascota_nombre').val(),$('#modificar_mascota_observacion').val(),$('#modificar_mascota_tipo').val(),$('#modificar_mascota_raza').val(),$('#modificar_mascota_tamaño').val(),$('#imagen-mascota').prop('files')[0]]);">Modificar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
   </div>

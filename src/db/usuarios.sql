@@ -9,7 +9,6 @@ DROP TABLE dueños;
 DROP TABLE mascotas;
 
 -- CREACION DE TABLAS
-
 CREATE TABLE cuentas (
 	id_cuenta int(11) NOT NULL AUTO_INCREMENT,
 	usuario varchar(50) DEFAULT NULL,
@@ -18,7 +17,7 @@ CREATE TABLE cuentas (
 	PRIMARY KEY (id_cuenta),
 	UNIQUE KEY unq_cuentas_email (usuario)
 );
-de
+
 CREATE TABLE guardianes (
 	id_guardian int(11) NOT NULL AUTO_INCREMENT,
     nombre varchar(50) DEFAULT NULL,

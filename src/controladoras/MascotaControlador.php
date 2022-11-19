@@ -69,6 +69,9 @@ class MascotaControlador
 	{		
 		try
 		{
+			$Tipos_Mascota = $this->TipoMascotaDAO->listar();
+			$Razas_Mascota = $this->RazaMascotaDAO->listar();
+			$Tamaños_Mascota = $this->TamañoMascotaDAO->listar();
 			$Mascota = new \modelos\Mascota\Mascota($id);
 			$Mascota = $this->MascotaDAO->leer($Mascota);
 			include("../vistas/Mascota/Modal/mascota_modificar.php");	
@@ -89,7 +92,7 @@ class MascotaControlador
 		try
 		{
 			$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
-			$TipoCerveza = new \modelos\Mascota\Mascota($id);
+			$Mascota = new \modelos\Mascota\Mascota($id);
 			include("../vistas/Mascota/Modal/mascota_eliminar_confirmacion.php");
 		} catch (\Exception $e) {
 				$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Danger',$e->getMessage());
@@ -149,9 +152,12 @@ public function modificar_mascota($id_mascota,$nombre,$observaciones,$id_tipo_ma
 {
     try
     {
+		$Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
+		$Raza_Mascota = new \modelos\Mascota\Raza_Mascota($id_raza_mascota,'');
+		$Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota,'');
         $JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 		$Dueño = unserialize($_SESSION['Dueño']);
-        $Mascota = new \modelos\Mascota\Mascota($id_mascota,$nombre,$observaciones,$id_tipo_mascota,$id_raza_mascota,$id_tamaño_mascota,'',$Dueño);			
+        $Mascota = new \modelos\Mascota\Mascota($id_mascota,$nombre,$observaciones,$Tipo_Mascota,$Raza_Mascota,$Tamaño_Mascota,'',$Dueño);			
         $Anterior_Mascota = $this->MascotaDAO->leer($Mascota);
         $Mascota->setImagen($Anterior_Mascota->getImagen());
         $Mascota = $this->MascotaDAO->actualizar($Mascota);
@@ -160,7 +166,7 @@ public function modificar_mascota($id_mascota,$nombre,$observaciones,$id_tipo_ma
             $this->subir_imagen('modificar',$Mascota,$archivo);			
             $Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Mascota modificada correctamente.');
               $Mensaje_Alerta->imprimir();
-            $JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascotas",[]);');
+            $JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_duenio",['.$Dueño->getId_Dueño().']);');
 
         }
         else
@@ -188,7 +194,7 @@ public function eliminar_mascota($id)
 	try
 	{
 		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
-		$Mascota = unserialize($_SESSION['Mascota']);
+		$Dueño = unserialize($_SESSION['Dueño']);
 		$Mascota = new \modelos\Mascota\Mascota($id);
 		$Mascota = $this->MascotaDAO->borrar($Mascota);
 		if($Mascota!=NULL)
@@ -196,7 +202,7 @@ public function eliminar_mascota($id)
 			$this->eliminar_imagen($Mascota);
 			$Mensaje_Alerta = new \modelos\Auxiliar\MensajeAlerta('Success','Mascota eliminada correctamente.');
 			  $Mensaje_Alerta->imprimir();  				
-			$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascotas",['.$Mascota->getId_Mascota().']);');
+			$JS_EN_PHP->ejecutar('Procesar("tabla_mascota","mascota/listar_mascota_duenio",['.$Dueño->getId_Dueño().']);');
 
 		}
 		else
