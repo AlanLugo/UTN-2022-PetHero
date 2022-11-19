@@ -19,7 +19,7 @@ class TamañoMascotaMysqlDAO extends SingletoneAbstractDAO
 	public function listar(){
         try{
 
-            $sql = "SELECT * from ".$this->tabla. " Order by nombre";
+            $sql = "SELECT * from ".$this->tabla. " Order by id_tamaño_mascota";
             $query = $this->dbh->prepare($sql);
             $query->execute();
             $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Tamaño_Mascota');

@@ -73,7 +73,40 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 		}
 	}
 
-	public function actualizar($id){}
+	public function actualizar($obj)
+	{
+		try {
+            $obj_existente = $this->buscar_x_id_guardian($obj);
+            if($obj_existente != NULL && $obj_existente->getId_Guardian() != $obj->getId_Guardian())
+            {
+                throw new \Exception("Error ya existe un registro con el mismo nombre.");
+                exit();
+            }
+            
+            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, direccion = ?, cuil = ?, disponibilidad = ?, precio = ?, id_tipo_mascota = ?, id_tamaño_mascota = ? WHERE id_guardian = ?";
+            $query = $this->dbh->prepare($sql);
+            $query->bindValue(1,$obj->getNombre());
+            $query->bindValue(2,$obj->getDireccion());
+            $query->bindValue(3,$obj->getCuil());
+            $query->bindValue(4,$obj->getDisponibilidad());
+            $query->bindValue(5,$obj->getPrecio());
+            $query->bindValue(6,$obj->getId_tipo_mascota()->getId_tipo_mascota());
+            $query->bindValue(7,$obj->getId_tamaño_mascota()->getId_tamaño_mascota());
+            $query->bindValue(8,$obj->getId_Guardian());
+            if($query->execute())
+            {
+                return $obj;
+            }
+            else
+            {
+                return NULL;
+            }
+        }catch(PDOException $e){
+            
+            print "Error!: " . $e->getMessage();
+        }
+	}
+
 	public function borrar($id){}
 
 	public function crear($obj){
