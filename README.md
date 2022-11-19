@@ -14,5 +14,5 @@ El **Dueño** es capaz de Visualizar, Cargar, Modificar y Borrar sus Mascotas de
 El **Guardian** es capaz de Visualizar, Cargar, Modificar y Borrar su Disponibilidad. El **Guardian** puede Modificar su **Perfil de Guardian** para  ajustar sus **Preferencias de Cuidado**. El **Guardian** puede Visualizar, Aceptar y Rechazar **Solicitudes de Reserva** que  haya recibido.
 Luego el **Dueño**, una vez **Aceptada** la **Reserva** con su **Disponibilidad**, el Dueño procede a generar el **Cupón de Pago** para poder **Abonar**  al **Guardian** su Estadía. Una vez finalizada la Jornada, el Guardian procede a dar de baja o actualizar su **Disponibilidad**, o puede optar por crear otra. El Dueño puede optar por realizar una **Review** a los **Guardianes** que haya contratado.
 
-## Aspectos a destacar
+## Primera parte, aplicacion con Json
 Por medio de la POO (Programacion Orientada a Objetos) y el sistema MVC (Modelo Vista Controlador)... 

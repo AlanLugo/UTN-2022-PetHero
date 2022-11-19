@@ -76,12 +76,6 @@ class CuentaMysqlDAO extends SingletoneAbstractDAO implements ICuentaDAO
                 throw new \Exception("Ya existe una cuenta con la misma descripcion.");
                 exit();
             }
-			/*
-				id_cuenta int(11) NOT NULL AUTO_INCREMENT,
-				usuario varchar(50) DEFAULT NULL,
-				password varchar(16) DEFAULT NULL,
-				rol varchar(20) DEFAULT NULL,
-			*/
             $sql = "INSERT INTO " . $this->tabla . " (usuario,password,rol) VALUES (?,?,?)";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getUsuario());
