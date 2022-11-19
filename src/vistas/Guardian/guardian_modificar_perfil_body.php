@@ -9,9 +9,11 @@
                 <select class="form-control" id="modificacion_guardian_tipo"  required>    
                     <?php
                       foreach($Tipos_Mascota as $Tipo){
-                    ?>
-                        <option value="<?php echo $Tipo->getId_tipo_mascota();?>"><?php echo $Tipo->getNombre();?></option>
-                    <?php      
+                        if($Guardian->getId_tipo_mascota() == $Tipo->getId_tipo_mascota()){
+                          ?><option value="<?php echo $Tipo->getId_tipo_mascota();?>" selected><?php echo $Tipo->getNombre();?></option><?php   
+                        }else{
+                          ?><option value="<?php echo $Tipo->getId_tipo_mascota();?>"><?php echo $Tipo->getNombre();?></option><?php  
+                        }                          
                     }     
                     ?>
                 </select>    
@@ -22,9 +24,11 @@
                 <select class="form-control" id="modificacion_guardian_tamaño"  required>    
                     <?php
                       foreach($Tamaños_Mascota as $Tamaño){
-                    ?>
-                        <option value="<?php echo $Tamaño->getId_tamaño_mascota();?>"><?php echo $Tamaño->getNombre();?></option>
-                    <?php      
+                        if($Guardian->getId_tamaño_mascota() == $Tamaño->getId_tamaño_mascota()){
+                          ?><option value="<?php echo $Tamaño->getId_tamaño_mascota();?>" selected><?php echo $Tamaño->getNombre();?></option><?php
+                        }else{
+                          ?><option value="<?php echo $Tamaño->getId_tamaño_mascota();?>"><?php echo $Tamaño->getNombre();?></option><?php
+                        }                          
                     }     
                     ?>
                 </select>    

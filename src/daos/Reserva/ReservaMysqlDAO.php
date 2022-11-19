@@ -231,5 +231,31 @@ class ReservaMysqlDAO extends SingletoneAbstractDAO implements IReservaDAO
 		}
 	}
 
+    public function exiten_reservas_en_curso($id_guardian, $id_tipo_mascota)
+	{
+		try {
+			$sql = "SELECT * from ".$this->tabla." inner join guardianes ON reservas.id_guardian = guardianes.id_guardian inner join mascotas ON mascotas.id_mascota = reservas.id_mascota where mascotas.id_tipo_mascota = ? AND guardianes.id_guardian = ? AND reservas.estado IN (0,1)";
+			$query = $this->dbh->prepare($sql);            
+            $query->bindValue(1,$id_tipo_mascota);
+			$query->bindValue(2,$id_guardian);
+			$query->execute();
+			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Reserva\Reserva');
+			$Reservas = NULL;
+			while ($row = $query->fetch()) {			
+				$Reservas[] = $row;
+			}
+            if(empty($Reservas)){
+                return false;
+            } else {
+                return true;
+            }
+			
+		}catch(PDOException $e){
+			
+			print "Error!: " . $e->getMessage();
+			
+		}
+	}
+
 }
 ?>

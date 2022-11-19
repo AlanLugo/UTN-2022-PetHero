@@ -10,9 +10,15 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 {
 	protected $tabla = "guardianes";
 	protected $dbh;
+
+
+	private $CuentaDAO;
+
 	public function __construct()
 	{
 		$this->dbh = Conexion::getInstance();
+		$this->CuentaDAO = \daos\Cuenta\CuentaMysqlDAO::getInstance();
+		
 	}
 	
 	public function getGuardian_byID($id){}
@@ -45,7 +51,7 @@ class GuardianMysqlDAO extends SingletoneAbstractDAO implements IGuardianDAO
 			$query->bindValue(1,$obj->getId_Guardian());
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Usuario\Guardian');
-			$obj = $query->fetch();			
+			$obj = $query->fetch();		
 			return $obj;
 			
 		}catch(PDOException $e){

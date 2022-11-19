@@ -8,12 +8,14 @@ class GuardianPerfilControlador
     private $GuardianDAO;
     private $TipoMascotaDAO;
     private $TamañoMascotaDAO;
+    private $ReservaDAO;
 
     function __construct()
     {
         $this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
         $this->TipoMascotaDAO = \daos\Mascota\TipoMascotaMysqlDAO::getInstance();
         $this->TamañoMascotaDAO = \daos\Mascota\TamañoMascotaMysqlDAO::getInstance();
+        $this->ReservaDAO = \daos\Reserva\ReservaMysqlDAO::getInstance();
     }
 
     /*
@@ -39,8 +41,8 @@ class GuardianPerfilControlador
         {
             $Tipos_Mascota = $this->TipoMascotaDAO->listar();
             $Tamaños_Mascota = $this->TamañoMascotaDAO->listar();
-
             $Guardian = unserialize($_SESSION['Guardian']);
+            $Guardian = $this->GuardianDAO->leer($Guardian);
             $TiempoRespuesta = new \modelos\Auxiliar\TiempoRespuesta();
             include("../vistas/Guardian/guardian_modificar_perfil.php");
         
@@ -54,11 +56,15 @@ class GuardianPerfilControlador
 {
     try
     {
-        $Guardian = unserialize($_SESSION['Guardian']);
-		$Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
-		$Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota,'');
         $JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
-        $Guardian = new \modelos\Usuario\Guardian($id_guardian,$Guardian->getNombre(),$Guardian->getDireccion(),$Guardian->getCuil(),$Guardian->getDisponibilidad(),$precio_estimado,$Tipo_Mascota,$Tamaño_Mascota,$Guardian->getId_Cuenta());			
+        $Guardian_Session = unserialize($_SESSION['Guardian']);        
+        $Guardian = $this->GuardianDAO->leer($Guardian_Session);
+        if($Guardian->getId_tipo_mascota()!=$id_tipo_mascota && $this->ReservaDAO->exiten_reservas_en_curso($id_guardian, $Guardian->getId_tipo_mascota())){
+            throw new \Exception("Error al modificar el perfil existen reservas pendientes o aceptadas..");
+        }
+		$Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
+		$Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota,'');        
+        $Guardian = new \modelos\Usuario\Guardian($id_guardian,$Guardian->getNombre(),$Guardian->getDireccion(),$Guardian->getCuil(),$Guardian->getDisponibilidad(),$precio_estimado,$Tipo_Mascota,$Tamaño_Mascota,$Guardian_Session->getId_Cuenta());			
         $Guardian = $this->GuardianDAO->actualizar($Guardian);
         if($Guardian!=NULL)
         {		
