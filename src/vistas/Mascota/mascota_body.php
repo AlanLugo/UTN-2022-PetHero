@@ -22,10 +22,10 @@ foreach($Mascotas as $Mascota){
      <li><?php echo $Mascota->getObservaciones();?></li>
    </ul>
     <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#modal_editar_mascota" onclick="Procesar('modal_editar_mascota','mascota/modal_mascota_modificar',['<?php echo $Mascota->getId_Mascota();?>']);return false;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-  </button> 
+    </button> 
 
-  <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#modal_eliminar_confirmacion" onclick="Procesar('modal_eliminar_confirmacion','mascota/eliminar_mascota_confirmacion',['<?php echo $Mascota->getId_Mascota();?>']);return false;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-  </button>
+      <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#modal_eliminar_confirmacion" onclick="Procesar('modal_eliminar_confirmacion','mascota/eliminar_mascota_confirmacion',['<?php echo $Mascota->getId_Mascota();?>']);return false;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>
   </div>
   
 </div>
