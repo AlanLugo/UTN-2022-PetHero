@@ -151,33 +151,6 @@ class LoginControlador
 	$nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, 
 	$nombre_guardian, $direccion_guardian, $cuil_guardian, $precio_guardian, $id_tipo_mascota, $id_tamaño_mascota)
 	{		
-		echo(" ");
-		echo($usuario);
-		echo(" ");
-		echo($password);
-		echo(" ");
-		echo($rol);
-		echo(" ");
-		echo($nombre_dueño);
-		echo(" ");
-		echo($dni_dueño);
-		echo(" ");
-		echo($direccion_dueño);
-		echo(" ");
-		echo($telefono_dueño);
-		echo(" ");
-		echo($nombre_guardian);
-		echo(" ");
-		echo($direccion_guardian);
-		echo(" ");
-		echo($cuil_guardian);
-		echo(" ");
-		echo($precio_guardian);
-		echo(" ");
-		echo($id_tipo_mascota);
-		echo(" ");
-		echo($id_tamaño_mascota);
-		echo(" ");
 		try
 		{
 			$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();	
@@ -220,10 +193,6 @@ class LoginControlador
 					{
 							$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
 							$Nuevo_Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
-							echo(" ");
-							echo("NUEVOTIPOMASCOTA->".$id_tipo_mascota);
-							print_r($Nuevo_Tipo_Mascota);
-							echo(" ");
 							$Nuevo_Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota,'');
 							$Nueva_Cuenta = $this->crear_registro_cuenta($usuario, $password, $rol);
 							$Nuevo_Guardian =$this->crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, true, $precio_guardian, $Nuevo_Tipo_Mascota, $Nuevo_Tamaño_Mascota, $Nueva_Cuenta);
@@ -294,12 +263,6 @@ class LoginControlador
 	{
 		try
 		{
-		
-		echo("Nombre dueño: ".$nombre_dueño);
-		echo("Dni dueño: ".$dni_dueño);
-		echo("Direccion dueño: ".$direccion_dueño);
-		echo("Telefono dueño: ".$telefono_dueño);
-		print_r($id_cuenta);
 		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 		$Nuevo_Dueño = new \modelos\Usuario\Dueño('',$nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, $id_cuenta);
 		if(empty($nombre_dueño) Or empty($dni_dueño) Or empty($direccion_dueño) Or empty($telefono_dueño))
@@ -333,7 +296,6 @@ class LoginControlador
 		
 		$Nuevo_Guardian = new \modelos\Usuario\Guardian
 		('',$nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $id_tipo_mascota, $id_tamaño_mascota, $id_cuenta);
-		print_r($Nuevo_Guardian);
 		if(empty($nombre_guardian) Or empty($direccion_guardian) Or empty($cuil_guardian) Or empty($disponibilidad_guardian) Or empty($precio_guardian) Or empty($id_tipo_mascota) Or empty($id_tamaño_mascota))
 			{
 				throw new \Exception("Campo/s vacio/s.");
