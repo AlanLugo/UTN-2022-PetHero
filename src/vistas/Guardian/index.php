@@ -25,7 +25,7 @@
 		<ul class="nav navbar-nav">
 			<li><a href="#" data-toggle="modal" onclick="Procesar('contenido','procesarindex/index',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mi Disponibidad</a></li>
 			<li><a href="#" data-toggle="modal" onclick="Procesar('body-panel-guardian','reserva/listar_reservas_x_guardian',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mis Solicitudes</a></li>
-		
+			<li><a href="#" data-toggle="modal" onclick="Procesar('body-panel-guardian','GuardianPerfil/listar_guardian',[]);return false;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Mi Guardian</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <?php echo $Guardian->getId_Cuenta()->getUsuario();?></a></li>

@@ -6,6 +6,8 @@ namespace controladoras;
 class LoginControlador
 {
 	private $CuentaDAO;
+	private $TipoMascotaDAO;
+	private $TamañoMascotaDAO;
 	private $GuardianDAO;
 	private $DueñoDAO;
 
@@ -13,6 +15,8 @@ class LoginControlador
 	{
 		# code...
 		$this->CuentaDAO = \daos\Cuenta\CuentaMysqlDAO::getInstance();
+		$this->TipoMascotaDAO = \daos\Mascota\TipoMascotaMysqlDAO::getInstance();
+		$this->TamañoMascotaDAO = \daos\Mascota\TamañoMascotaMysqlDAO::getInstance();
 		$this->GuardianDAO = \daos\Guardian\GuardianMysqlDAO::getInstance();
 		$this->DueñoDAO = \daos\Dueño\DueñoMysqlDAO::getInstance();
 	}
@@ -72,7 +76,9 @@ class LoginControlador
 
 	public function modal_cuenta_crear()
 	{		
-		
+
+			$Tipos_Mascota = $this->TipoMascotaDAO->listar();
+			$Tamaños_Mascota = $this->TamañoMascotaDAO->listar();
 			include("../vistas/Cuenta/Modal/cuenta_crear.php");	
 		
 	}
@@ -143,9 +149,35 @@ class LoginControlador
 	public function registro
 	($usuario, $password, $rol, 
 	$nombre_dueño, $dni_dueño, $direccion_dueño, $telefono_dueño, 
-	$nombre_guardian, $direccion_guardian, $cuil_guardian, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian)
+	$nombre_guardian, $direccion_guardian, $cuil_guardian, $precio_guardian, $id_tipo_mascota, $id_tamaño_mascota)
 	{		
-		
+		echo(" ");
+		echo($usuario);
+		echo(" ");
+		echo($password);
+		echo(" ");
+		echo($rol);
+		echo(" ");
+		echo($nombre_dueño);
+		echo(" ");
+		echo($dni_dueño);
+		echo(" ");
+		echo($direccion_dueño);
+		echo(" ");
+		echo($telefono_dueño);
+		echo(" ");
+		echo($nombre_guardian);
+		echo(" ");
+		echo($direccion_guardian);
+		echo(" ");
+		echo($cuil_guardian);
+		echo(" ");
+		echo($precio_guardian);
+		echo(" ");
+		echo($id_tipo_mascota);
+		echo(" ");
+		echo($id_tamaño_mascota);
+		echo(" ");
 		try
 		{
 			$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();	
@@ -187,8 +219,14 @@ class LoginControlador
 					else
 					{
 							$Nueva_Cuenta = new \modelos\Usuario\Cuenta('',$usuario, $password, $rol);
+							$Nuevo_Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
+							echo(" ");
+							echo("NUEVOTIPOMASCOTA->".$id_tipo_mascota);
+							print_r($Nuevo_Tipo_Mascota);
+							echo(" ");
+							$Nuevo_Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota,'');
 							$Nueva_Cuenta = $this->crear_registro_cuenta($usuario, $password, $rol);
-							$Nuevo_Guardian =$this->crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, true, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian, $Nueva_Cuenta);
+							$Nuevo_Guardian =$this->crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, true, $precio_guardian, $Nuevo_Tipo_Mascota, $Nuevo_Tamaño_Mascota, $Nueva_Cuenta);
 
 							if($Nuevo_Guardian!=NULL)
 							{
@@ -287,16 +325,16 @@ class LoginControlador
 	  	}
 	}
 
-	public function crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian, $id_cuenta)
+	public function crear_registro_guardian($nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $id_tipo_mascota, $id_tamaño_mascota, $id_cuenta)
 	{
 		try
 		{
 		$JS_EN_PHP = new \modelos\Auxiliar\JS_EN_PHP();
 		
 		$Nuevo_Guardian = new \modelos\Usuario\Guardian
-		('',$nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $tamaño_maximo_guardian, $raza_dia_guardian, $id_cuenta);
-		
-		if(empty($nombre_guardian) Or empty($direccion_guardian) Or empty($cuil_guardian) Or empty($disponibilidad_guardian) Or empty($precio_guardian) Or empty($tamaño_maximo_guardian) Or empty($raza_dia_guardian))
+		('',$nombre_guardian, $direccion_guardian, $cuil_guardian, $disponibilidad_guardian, $precio_guardian, $id_tipo_mascota, $id_tamaño_mascota, $id_cuenta);
+		print_r($Nuevo_Guardian);
+		if(empty($nombre_guardian) Or empty($direccion_guardian) Or empty($cuil_guardian) Or empty($disponibilidad_guardian) Or empty($precio_guardian) Or empty($id_tipo_mascota) Or empty($id_tamaño_mascota))
 			{
 				throw new \Exception("Campo/s vacio/s.");
 				exit();

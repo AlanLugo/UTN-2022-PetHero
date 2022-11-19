@@ -36,19 +36,29 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label">Tamaño mascota preferencia</label>
-                    <select class="form-control" id="alta_guardian_tamaño_mascota" placeholder="Seleccione un tamaño" required>
-                        <option>Vacio</option>
-                        <option>Chico</option>
-                        <option>Mediano</option>
-                        <option>Grande</option>
-                    </select>    
+              <label class="control-label">Tipo de mascota</label>
+                  <select class="form-control" id="alta_guardian_mascota_tipo" required>    
+                    <?php
+                      foreach($Tipos_Mascota as $Tipo){
+                    ?>
+                        <option value="<?php echo $Tipo->getId_tipo_mascota();?>"><?php echo $Tipo->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
             </div>
 
             <div class="form-group">
-                <label class="control-label"
-                for="inputEmail3">Raza dia</label>
-                <input class="form-control" id="alta_guardian_raza_dia" placeholder="Ingrese una raza" type="text" required>
+              <label class="control-label">Tamaño</label>
+                  <select class="form-control" id="alta_guardian_mascota_tamaño" required>    
+                    <?php
+                      foreach($Tamaños_Mascota as $Tamaño){
+                    ?>
+                        <option value="<?php echo $Tamaño->getId_tamaño_mascota();?>"><?php echo $Tamaño->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
             </div>
 
             

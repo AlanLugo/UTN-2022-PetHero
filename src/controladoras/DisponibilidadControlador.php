@@ -6,10 +6,14 @@ namespace controladoras;
 class DisponibilidadControlador
 {
     private $DisponibilidadDAO;
+	private $TipoMascotaDAO;
+	private $TamañoMascotaDAO;
 
     function __construct()
     {
         $this->DisponibilidadDAO = \daos\Disponibilidad\DisponibilidadMysqlDAO::getInstance();
+		$this->TipoMascotaDAO = \daos\Mascota\TipoMascotaMysqlDAO::getInstance();
+		$this->TamañoMascotaDA0 = \daos\Mascota\TamañoMascotaMysqlDAO::getInstance();
     }
 
 /*
@@ -225,11 +229,13 @@ public function lista_disponibilidades()
 		Funcion que se encarga retornar un arreglo con objetos de disponibilidad		
 	===============================================================================
 */	
-public function listar_disponibilidad_guardian_raza_tamanio($raza_dia, $tamaño_maximo)
+public function listar_disponibilidad_guardian_raza_tamanio($id_tipo_mascota, $id_tamaño_mascota)
 {	
 	try 
-	{
-		$Guardian = new \modelos\Usuario\Guardian('','','','','','',$tamaño_maximo,$raza_dia);
+	{	
+		$Seleccion_Tipo_Mascota = new \modelos\Mascota\Tipo_Mascota($id_tipo_mascota,'');
+		$Seleccion_Tamaño_Mascota = new \modelos\Mascota\Tamaño_Mascota($id_tamaño_mascota,'');
+		$Guardian = new \modelos\Usuario\Guardian('','','','','','',$Seleccion_Tipo_Mascota,$Seleccion_Tamaño_Mascota);
 		$Disponibilidades = $this->DisponibilidadDAO->listar_disponibilidad_guardian_raza_tamanio($Guardian);
 		include('../vistas/Reserva/disponibilidad_reserva.php');		
 			

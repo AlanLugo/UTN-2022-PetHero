@@ -9,7 +9,6 @@ DROP TABLE dueños;
 DROP TABLE mascotas;
 
 -- CREACION DE TABLAS
-
 CREATE TABLE cuentas (
 	id_cuenta int(11) NOT NULL AUTO_INCREMENT,
 	usuario varchar(50) DEFAULT NULL,
@@ -26,11 +25,13 @@ CREATE TABLE guardianes (
     cuil varchar(32) DEFAULT NULL,
     disponibilidad boolean DEFAULT true,
     precio decimal(50) DEFAULT NULL,
-    tamaño_maximo varchar(45) DEFAULT NULL,
-    raza_dia varchar(45) DEFAULT NULL,
+    id_tipo_mascota int,
+    id_tamaño_mascota int,
     id_cuenta int,
     PRIMARY KEY (id_guardian),
 	UNIQUE KEY unq_guardianes_cuil (cuil),
+	FOREIGN KEY fk_guardianes_id_tipo_mascota (id_tipo_mascota) REFERENCES tipos_mascota(id_tipo_mascota),
+    FOREIGN KEY fk_guardianes_id_tamaño_mascota (id_tamaño_mascota) REFERENCES tamaños_mascota(id_tamaño_mascota),
     FOREIGN KEY fk_guardianes_id_cuenta (id_cuenta) REFERENCES cuentas(id_cuenta)
 );
 
@@ -49,12 +50,16 @@ CREATE TABLE dueños (
 CREATE TABLE mascotas (
 	id_mascota int(11) NOT NULL AUTO_INCREMENT,
     nombre varchar(50) NOT NULL,
-    raza varchar(50) NOT NULL,
-    tamaño varchar(100) NOT NULL,
     observaciones varchar(50) NOT NULL,
     imagen varchar(512) NOT NULL,
+    id_tipo_mascota int,
+    id_raza_mascota int,
+    id_tamaño_mascota int,
     id_dueño int,
 	PRIMARY KEY (id_mascota),
+    FOREIGN KEY fk_mascotas_id_tipo_mascota (id_tipo_mascota) REFERENCES tipos_mascota(id_tipo_mascota),
+    FOREIGN KEY fk_mascotas_id_raza_mascota (id_raza_mascota) REFERENCES razas_mascota(id_raza_mascota),
+    FOREIGN KEY fk_mascotas_id_tamaño_mascota (id_tamaño_mascota) REFERENCES tamaños_mascota(id_tamaño_mascota),
     FOREIGN KEY fk_mascotas_id_dueño (id_dueño) REFERENCES dueños(id_dueño)
 );
 
@@ -96,10 +101,10 @@ CREATE TABLE razas_mascota (
     FOREIGN KEY fk_raza_id_tipo_mascota (id_tipo_mascota) REFERENCES tipos_mascota(id_tipo_mascota)
 );
 
-CREATE TABLE tamaños_maximo (
-	id_tamaño_maximo int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE tamaños_mascota (
+	id_tamaño_mascota int(11) NOT NULL AUTO_INCREMENT,
     nombre varchar(32) NOT NULL,
-    PRIMARY KEY (id_tamaño_maximo)
+    PRIMARY KEY (id_tamaño_mascota)
 );
 
 -- INSERT´S DATOS DEFAULT
@@ -121,12 +126,12 @@ INSERT INTO pethero.dueños
 VALUES(1, 'Alan', '40523685', 'Vertin 123', 15523156, 2);
 
 INSERT INTO pethero.mascotas
-(id_mascota, nombre, raza, tamaño, observaciones, imagen, id_dueño)
-VALUES(1, 'Mona', 'Caniche', 'Chico', 'Un poco molesto', 'https://imagenes.20minutos.es/files/og_thumbnail/uploads/imagenes/2019/03/07/684425.jpg',1);
+(id_mascota, nombre, observaciones, imagen, id_tipo_mascota, id_raza_mascota, id_tamaño_mascota,  id_dueño)
+VALUES(1, 'Mona', 'Un poco molesto', 'https://imagenes.20minutos.es/files/og_thumbnail/uploads/imagenes/2019/03/07/684425.jpg',2,4,1,1);
 
 INSERT INTO pethero.mascotas
-(id_mascota, nombre, raza, tamaño, observaciones, imagen, id_dueño)
-VALUES(2, 'Sally', 'Perro', 'Chico', 'Duerme todo el dia', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn8qccOYwswN-ClkaJvGDGFPITS3COMOPJY6vvRY0mCWyx_6hO2miEIMCLPYK-aKTfepQ&usqp=CAU',1);
+(id_mascota, nombre, observaciones, imagen, id_tipo_mascota, id_raza_mascota, id_tamaño_mascota,  id_dueño)
+VALUES(2, 'Sally', 'Duerme todo el dia', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn8qccOYwswN-ClkaJvGDGFPITS3COMOPJY6vvRY0mCWyx_6hO2miEIMCLPYK-aKTfepQ&usqp=CAU',1,1,1,1);
 
 INSERT INTO pethero.disponibilidades
 (id_disponibilidad, fecha_inicio, fecha_final, disponible, id_guardian)
@@ -171,14 +176,14 @@ VALUES(6, "Gato ragdoll", 2);
 
 -- INSERT´S DATOS MASCOTAS TAMAÑO
 
-INSERT INTO pethero.tamaños_maximo
-(id_tamaño_maximo, nombre)
+INSERT INTO pethero.tamaños_mascota
+(id_tamaño_mascota, nombre)
 VALUES(1, "Chico");
 
-INSERT INTO pethero.tamaños_maximo
-(id_tamaño_maximo, nombre)
+INSERT INTO pethero.tamaños_mascota
+(id_tamaño_mascota, nombre)
 VALUES(2, "Mediano");
 
-INSERT INTO pethero.tamaños_maximo
-(id_tamaño_maximo, nombre)
+INSERT INTO pethero.tamaños_mascota
+(id_tamaño_mascota, nombre)
 VALUES(3, "Grande");

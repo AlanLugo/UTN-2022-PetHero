@@ -7,7 +7,7 @@ class Tipo_Mascota
     protected $id_tipo_mascota;
     protected $nombre;
     
-    public function __constructor($id_tipo_mascota = '', $nombre = '')
+    public function __construct($id_tipo_mascota = '', $nombre = '')
     {
         $this->setId_tipo_mascota($id_tipo_mascota);
         $this->setNombre($nombre);

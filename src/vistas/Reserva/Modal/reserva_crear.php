@@ -41,15 +41,6 @@
                     ?>
                   </select>    
             </div>
-            <!--
-              protected $id_reserva;
-              protected $fecha_inicio;
-              protected $fecha_final;
-              protected $estado;
-              protected $id_mascota;
-              protected $id_dueño;
-              protected $id_guardian; 
-            -->
       </form>
     </div>
     <div class="modal-footer" id="footer_reserva_crear">

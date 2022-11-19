@@ -14,6 +14,9 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
     public function __construct()
     {
         $this->dbh = Conexion::getInstance();
+        $this->TipoMascotaDAO = \daos\Mascota\TipoMascotaMysqlDAO::getInstance();
+        $this->RazaMascotaDAO = \daos\Mascota\RazaMascotaMysqlDAO::getInstance();
+        $this->TamañoMascotaDAO = \daos\Mascota\TamañoMascotaMysqlDAO::getInstance();
     }
 
     public function getMascota_byID($id){}
@@ -85,14 +88,15 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
                 exit();
             }
             
-            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, raza = ?, tamaño = ?, observaciones = ?, imagen = ? WHERE id_mascota = ?";
+            $sql = "UPDATE " . $this->tabla . " SET nombre = ?, observaciones = ?, imagen = ?, id_tipo_mascota = ?, id_raza_mascota = ?, id_tamaño_mascota = ? WHERE id_mascota = ?";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
-            $query->bindValue(2,$obj->getRaza());
-            $query->bindValue(3,$obj->getTamaño());
-            $query->bindValue(4,$obj->getObservaciones());
-            $query->bindValue(5,$obj->getImagen());
-            $query->bindValue(6,$obj->getId_Mascota());
+            $query->bindValue(2,$obj->getObservaciones());
+            $query->bindValue(3,$obj->getImagen());
+            $query->bindValue(4,$obj->getId_tipo_mascota()->getId_tipo_mascota());
+            $query->bindValue(5,$obj->getId_raza_mascota()->getId_raza_mascota());
+            $query->bindValue(6,$obj->getId_tamaño_mascota()->getId_tamaño_mascota());
+            $query->bindValue(7,$obj->getId_Mascota());
             if($query->execute())
             {
                 return $obj;
@@ -140,14 +144,15 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
                 exit();
             }
             
-            $sql = "INSERT INTO " . $this->tabla . " (nombre,raza,tamaño,observaciones,imagen,id_dueño) VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO " . $this->tabla . " (nombre,observaciones,imagen,id_tipo_mascota,id_raza_mascota,id_tamaño_mascota,id_dueño) VALUES (?,?,?,?,?,?,?)";
             $query = $this->dbh->prepare($sql);
             $query->bindValue(1,$obj->getNombre());
-            $query->bindValue(2,$obj->getRaza());
-            $query->bindValue(3,$obj->getTamaño());
-            $query->bindValue(4,$obj->getObservaciones());
-            $query->bindValue(5,$obj->getImagen());
-            $query->bindValue(6,$obj->getId_Dueño()->getId_Dueño());
+            $query->bindValue(2,$obj->getObservaciones());
+            $query->bindValue(3,$obj->getImagen());
+            $query->bindValue(4,$obj->getId_tipo_mascota()->getId_tipo_mascota());
+            $query->bindValue(5,$obj->getId_raza_mascota()->getId_raza_mascota());
+            $query->bindValue(6,$obj->getId_tamaño_mascota()->getId_tamaño_mascota());
+            $query->bindValue(7,$obj->getId_Dueño()->getId_Dueño());
             if($query->execute())
             {
                 $obj->setId_Mascota($this->dbh->lastInsertId());
@@ -168,14 +173,18 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 	public function listar(){
         try{
 
-            $sql = "SELECT * from".$this->tabla. "Order by nombre";
+            $sql = "SELECT * from ".$this->tabla. " Order by nombre";
             $query = $this->dbh->prepare($sql);
             $query->execute();
             $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
             $Mascotas = NULL;
             while ($row = $query->fetch()) {
+                $row->setId_tipo_mascota($this->TipoMascotaDAO->leer(new \modelos\Mascota\Tipo_Mascota($row->getId_tipo_mascota())));
+                $row->setId_raza_mascota($this->RazaMascotaDAO->leer(new \modelos\Mascota\Raza_Mascota($row->getId_raza_mascota())));
+                $row->setId_tamaño_mascota($this->TamañoMascotaDAO->leer(new \modelos\Mascota\Tamaño_Mascota($row->getId_tamaño_mascota())));
                 $Mascotas[] = $row;
             }
+            return $Mascotas;
         }catch(PDOException $e){
 
             print "Error!: " . $e->getMessage();
@@ -230,7 +239,10 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
 			$Mascotas = NULL;
-			while ($row = $query->fetch()) {				
+			while ($row = $query->fetch()) {	
+                $row->setId_tipo_mascota($this->TipoMascotaDAO->leer(new \modelos\Mascota\Tipo_Mascota($row->getId_tipo_mascota())));
+                $row->setId_raza_mascota($this->RazaMascotaDAO->leer(new \modelos\Mascota\Raza_Mascota($row->getId_raza_mascota())));
+                $row->setId_tamaño_mascota($this->TamañoMascotaDAO->leer(new \modelos\Mascota\Tamaño_Mascota($row->getId_tamaño_mascota())));			
 				$Mascotas[] = $row;
 			}
 			return $Mascotas;
@@ -242,14 +254,14 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 		}
 	}
 
-    public function listar_x_dueño_tamaño_raza($id_dueño, $tamaño, $raza)
+    public function listar_x_dueño_tamaño_raza($id_dueño, $id_tipo_mascota, $id_tamaño_mascota)
 	{
 		try {
-			$sql = "SELECT id_mascota, nombre, raza, tamaño, observaciones, imagen, id_dueño FROM ".$this->tabla." WHERE id_dueño = ? AND tamaño = ? AND raza = ?";
+			$sql = "SELECT id_mascota, nombre, observaciones, imagen, id_tipo_mascota, id_raza_mascota, id_tamaño_mascota, id_dueño FROM ".$this->tabla." WHERE id_dueño = ? AND id_tipo_mascota = ? AND id_tamaño_mascota = ?";
 			$query = $this->dbh->prepare($sql);
 			$query->bindValue(1,$id_dueño);
-			$query->bindValue(2,$tamaño);
-			$query->bindValue(3,$raza);
+			$query->bindValue(2,$id_tipo_mascota);
+			$query->bindValue(3,$id_tamaño_mascota);
 			$query->execute();
 			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Mascota');
 			$Mascotas = NULL;
@@ -264,6 +276,28 @@ class MascotaMysqlDAO extends SingletoneAbstractDAO implements IMascotaDAO
 			
 		}
 	}
+
+    public function listar_tipo_mascota_dueño_x_carga_existente($obj)
+    {
+        try {
+            $sql = "SELECT tipos_mascota.id_tipo_mascota, tipos_mascota.nombre FROM tipos_mascota INNER JOIN mascotas on mascotas.id_tipo_mascota = tipos_mascota.id_tipo_mascota AND mascotas.id_dueño = ? group by tipos_mascota.id_tipo_mascota, tipos_mascota.nombre";
+			$query = $this->dbh->prepare($sql);
+			$query->bindValue(1,$obj->getId_dueño());
+			$query->execute();
+			$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'modelos\Mascota\Tipo_Mascota');
+			$Mascotas = NULL;
+			while ($row = $query->fetch()) {				
+				$Mascotas[] = $row;
+			}
+            print_r($Mascotas);
+			return $Mascotas;
+			
+		}catch(PDOException $e){
+			
+			print "Error!: " . $e->getMessage();
+			
+		}
+    }
 
 }
 ?>

@@ -13,18 +13,45 @@
                 for="inputEmail3">Nombre</label>
                 <input class="form-control" id="alta_mascota_nombre" placeholder="Ingrese un nombre" type="text" >
             </div>
-  
             <div class="form-group">
-                <label class="control-label"
-                for="inputEmail3">Raza</label>
-                <input class="form-control" id="alta_mascota_raza" placeholder="Ingrese una raza" type="text">
+              <label class="control-label">Tipo de mascota</label>
+                  <select class="form-control" id="alta_mascota_tipo" required>    
+                    <?php
+                      foreach($Tipos_Mascota as $Tipo){
+                    ?>
+                        <option value="<?php echo $Tipo->getId_tipo_mascota();?>"><?php echo $Tipo->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
             </div>
 
             <div class="form-group">
-                <label class="control-label"
-                for="inputEmail3">Tamaño</label>
-                <input class="form-control" id="alta_mascota_tamaño" placeholder="Ingrese un tamaño" type="text">
+              <label class="control-label">Raza</label>
+                  <select class="form-control" id="alta_mascota_raza" required>    
+                    <?php
+                      foreach($Razas_Mascota as $Raza){
+                    ?>
+                        <option value="<?php echo $Raza->getId_raza_mascota();?>"><?php echo $Raza->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
             </div>
+
+            <div class="form-group">
+              <label class="control-label">Tamaño</label>
+                  <select class="form-control" id="alta_mascota_tamaño" required>    
+                    <?php
+                      foreach($Tamaños_Mascota as $Tamaño){
+                    ?>
+                        <option value="<?php echo $Tamaño->getId_tamaño_mascota();?>"><?php echo $Tamaño->getNombre();?></option>
+                    <?php      
+                    }     
+                    ?>
+                  </select>    
+            </div>
+
 
         <div class="form-group">
                 <label class="control-label"
@@ -47,7 +74,7 @@
     </div>
     <div class="modal-footer" id="footer_mascota_crear">
 
-      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_mascota','mascota/alta_mascota',[$('#alta_mascota_nombre').val(),$('#alta_mascota_raza').val(),$('#alta_mascota_tamaño').val(),$('#alta_mascota_observacion').val(),$('#imagen-mascota').prop('files')[0]]);">Crear</button>
+      <button type="button" class="btn btn-success" onclick="Procesar('formulario_alta_mascota','mascota/alta_mascota',[$('#alta_mascota_nombre').val(),$('#alta_mascota_observacion').val(),$('#alta_mascota_tipo').val(),$('#alta_mascota_raza').val(),$('#alta_mascota_tamaño').val(),$('#imagen-mascota').prop('files')[0]]);">Crear</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
   </div>

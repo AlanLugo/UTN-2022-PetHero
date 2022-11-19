@@ -1,5 +1,8 @@
 <?php
 namespace daos\Guardian;
+use daos\SingletoneAbstractDAO as SingletoneAbstractDAO;
+use daos\Conexion as Conexion;
+use PDOException;
 
 use modelos\Usuario\Guardian;
 
